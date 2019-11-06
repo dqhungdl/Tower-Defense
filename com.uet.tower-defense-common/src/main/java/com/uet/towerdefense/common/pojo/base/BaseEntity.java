@@ -1,12 +1,12 @@
 package com.uet.towerdefense.common.pojo.base;
 
-public interface BaseEntity<Tid extends Object> {
+import java.io.Serializable;
+
+public interface BaseEntity<Tid extends Object> extends Serializable {
 
     Tid getId();
 
     void setId(Tid id);
 
     String getEntityType();
-
-    void setEntityType(String entityType);
 }

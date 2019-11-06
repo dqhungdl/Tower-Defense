@@ -1,6 +1,8 @@
-package com.uet.towerdefense.common.pojo.base;
+package com.uet.towerdefense.common.pojo.towers;
 
-public abstract class AbstractTower implements BaseTower {
+import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
+
+public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
 
     private int speed;
 

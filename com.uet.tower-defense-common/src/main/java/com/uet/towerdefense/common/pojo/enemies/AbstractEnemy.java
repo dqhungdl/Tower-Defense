@@ -1,6 +1,8 @@
-package com.uet.towerdefense.common.pojo.base;
+package com.uet.towerdefense.common.pojo.enemies;
 
-public abstract class AbstractEnemy implements BaseEnemy {
+import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
+
+public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implements BaseEnemy<Long> {
 
     private int hp;
 
