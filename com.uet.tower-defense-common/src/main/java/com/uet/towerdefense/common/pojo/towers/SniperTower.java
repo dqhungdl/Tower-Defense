@@ -8,4 +8,14 @@ public class SniperTower extends AbstractTower {
     public String getTowerType() {
         return Towers.SNIPER;
     }
+
+    @Override
+    public String getStandImageId() {
+        return null;
+    }
+
+    @Override
+    public String getTowerImageId() {
+        return null;
+    }
 }

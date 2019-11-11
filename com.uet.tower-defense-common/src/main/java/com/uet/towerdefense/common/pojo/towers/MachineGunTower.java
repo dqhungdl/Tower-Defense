@@ -8,4 +8,14 @@ public class MachineGunTower extends AbstractTower {
     public String getTowerType() {
         return Towers.MACHINE_GUN;
     }
+
+    @Override
+    public String getStandImageId() {
+        return null;
+    }
+
+    @Override
+    public String getTowerImageId() {
+        return null;
+    }
 }

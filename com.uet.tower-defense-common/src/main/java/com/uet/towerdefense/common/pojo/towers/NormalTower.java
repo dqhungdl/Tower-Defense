@@ -4,8 +4,30 @@ import com.uet.towerdefense.common.enums.Towers;
 
 public class NormalTower extends AbstractTower {
 
+    public static final String STAND_IMAGE_ID = "180";
+    public static final String[] TOWER_IMAGE_ID = new String[]{"249", "250"};
+
+    public NormalTower(int x, int y) {
+        this.x = x;
+        this.y = y;
+        speed = Towers.NORMAL_SPEED[level];
+        range = Towers.NORMAL_RANGE[level];
+        damage = Towers.NORMAL_DAMAGE[level];
+        gold = Towers.NORMAL_GOLD[level];
+    }
+
     @Override
     public String getTowerType() {
         return Towers.NORMAL;
+    }
+
+    @Override
+    public String getStandImageId() {
+        return STAND_IMAGE_ID;
+    }
+
+    @Override
+    public String getTowerImageId() {
+        return TOWER_IMAGE_ID[level];
     }
 }

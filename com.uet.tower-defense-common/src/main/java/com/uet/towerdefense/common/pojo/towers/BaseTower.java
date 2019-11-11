@@ -20,5 +20,15 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void setGold(int gold);
 
+    int getLevel();
+
+    void setLevel(int level);
+
+    void levelUp();
+
     String getTowerType();
+
+    String getStandImageId();
+
+    String getTowerImageId();
 }

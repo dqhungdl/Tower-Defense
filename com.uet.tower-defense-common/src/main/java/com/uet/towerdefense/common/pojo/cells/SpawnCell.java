@@ -4,6 +4,11 @@ import com.uet.towerdefense.common.enums.Cells;
 
 public class SpawnCell extends AbstractCell {
 
+    public SpawnCell(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public String getCellType() {
         return Cells.SPAWN;

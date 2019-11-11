@@ -4,13 +4,15 @@ import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 
 public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
 
-    private int speed;
+    protected int speed;
 
-    private int range;
+    protected int range;
 
-    private int damage;
+    protected int damage;
 
-    private int gold;
+    protected int gold;
+
+    protected int level = 0;
 
     @Override
     public int getSpeed() {
@@ -51,4 +53,30 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     public void setGold(int gold) {
         this.gold = gold;
     }
+
+    @Override
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    @Override
+    public void levelUp() {
+        if (level == 1)
+            return;
+        level++;
+    }
+
+    @Override
+    public abstract String getTowerType();
+
+    @Override
+    public abstract String getStandImageId();
+
+    @Override
+    public abstract String getTowerImageId();
 }

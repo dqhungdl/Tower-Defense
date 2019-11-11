@@ -8,5 +8,13 @@ public interface BaseEntity<Tid extends Object> extends Serializable {
 
     void setId(Tid id);
 
+    int getX();
+
+    void setX(int x);
+
+    int getY();
+
+    void setY(int y);
+
     String getEntityType();
 }
