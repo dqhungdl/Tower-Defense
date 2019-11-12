@@ -6,6 +6,7 @@ import com.uet.towerdefense.common.pojo.base.BaseEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
+import com.uet.towerdefense.common.pojo.towers.Bullet;
 import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.worker.service.GamePlayScene;
 import javafx.animation.Animation;
@@ -37,8 +38,18 @@ public class SceneController {
     public void toGamePlayScene() {
         animation.stop();
         gamePlayScene.init(0);
-        BaseEnemy normalEnemy = new NormalEnemy(0, 0, 45);
+        BaseEnemy normalEnemy = new NormalEnemy(0, 0, 0);
         gamePlayScene.addEnemy(normalEnemy);
+
+        Bullet bullet = new Bullet(0,0, 315);
+        gamePlayScene.addBullet(bullet);
+
+        NormalTower normalTower = new NormalTower(0,0, 135);
+        gamePlayScene.addTower(normalTower);
+
+
+
+
         stage.setScene(gamePlayScene.getScene());
     }
 }

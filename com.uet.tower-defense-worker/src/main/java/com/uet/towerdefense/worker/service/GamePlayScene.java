@@ -6,6 +6,7 @@ import com.uet.towerdefense.common.pojo.base.BaseEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
+import com.uet.towerdefense.common.pojo.towers.Bullet;
 import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.animation.AnimationTimer;
@@ -64,6 +65,19 @@ public class GamePlayScene {
     // Enemy utils
     public void addEnemy(BaseEnemy enemy) {
         entities.add(enemy);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                render();
+                update();
+            }
+        };
+        animationTimer.start();
+    }
+
+    public  void addBullet(Bullet bullet)
+    {
+        entities.add(bullet);
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long l) {

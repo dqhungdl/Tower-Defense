@@ -6,6 +6,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected double speed;
 
+    protected  double direction;
+
     protected double range;
 
     protected int damage;

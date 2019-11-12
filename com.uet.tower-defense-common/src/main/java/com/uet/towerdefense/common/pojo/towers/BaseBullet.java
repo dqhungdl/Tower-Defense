@@ -11,4 +11,8 @@ public interface BaseBullet<Tid extends Object> extends BaseEntity<Tid> {
     int getDamage();
 
     void setDamage(int damage);
+
+    String getBulletType();
+
+    String getBulletImageId();
 }
