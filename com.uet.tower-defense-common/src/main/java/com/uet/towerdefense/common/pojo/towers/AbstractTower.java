@@ -4,9 +4,9 @@ import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 
 public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
 
-    protected double speed;
+    protected int speed;
 
-    protected double range;
+    protected int range;
 
     protected int damage;
 
@@ -15,22 +15,22 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     protected int level = 0;
 
     @Override
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
     @Override
-    public double getRange() {
+    public int getRange() {
         return range;
     }
 
     @Override
-    public void setRange(double range) {
+    public void setRange(int range) {
         this.range = range;
     }
 

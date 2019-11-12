@@ -19,8 +19,4 @@ public interface BaseEntity<Tid extends Object> extends Serializable {
     void setY(int y);
 
     String getEntityType();
-
-    void render(Group group);
-
-    void update();
 }

@@ -31,14 +31,4 @@ public class NormalTower extends AbstractTower {
     public String getTowerImageId() {
         return TOWER_IMAGE_ID[level];
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

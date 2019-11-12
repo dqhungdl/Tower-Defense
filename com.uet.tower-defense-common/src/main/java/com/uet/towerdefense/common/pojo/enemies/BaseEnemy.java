@@ -1,6 +1,11 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
+import com.uet.towerdefense.common.data.Pair;
+import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.pojo.base.BaseDynamicEntity;
+import javafx.scene.Group;
+
+import java.util.List;
 
 public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
@@ -8,9 +13,9 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setHp(int hp);
 
-    double getSpeed();
+    int getSpeed();
 
-    void setSpeed(double speed);
+    void setSpeed(int speed);
 
     int getDefense();
 
@@ -20,11 +25,19 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setGold(int gold);
 
-    double getDirection();
+    int getDirection();
 
-    void setDirection(double direction);
+    void setDirection(int direction);
+
+    Vector getVector();
+
+    void setVector(Vector vector);
 
     String getEnemyType();
 
     String getEnemyImageId();
+
+    void render(Group group);
+
+    void update(List<Pair> paths);
 }

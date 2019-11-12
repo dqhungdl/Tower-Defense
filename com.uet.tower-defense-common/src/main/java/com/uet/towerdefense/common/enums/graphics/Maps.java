@@ -1,5 +1,8 @@
 package com.uet.towerdefense.common.enums.graphics;
 
+import com.uet.towerdefense.common.pojo.cells.SpawnCell;
+import com.uet.towerdefense.common.pojo.cells.TargetCell;
+
 public class Maps {
 
     public static final int GRASS = 0;
@@ -7,6 +10,14 @@ public class Maps {
     public static final int OBSTACLE = 2;
     public static final int SPAWN = 3;
     public static final int TARGET = 4;
+
+    public static final SpawnCell[] MAP_SPAWNS = new SpawnCell[]{
+            new SpawnCell(21, 30)
+    };
+
+    public static final TargetCell[] MAP_TARGETS = new TargetCell[]{
+            new TargetCell(-1, 3)
+    };
 
     public static final int[][][] MAP_SPRITES = new int[][][]{
             {
@@ -17,10 +28,10 @@ public class Maps {
                     {0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 2, 2, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},
                     {0, 0, 2, 1, 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0},

@@ -1,12 +1,7 @@
 package com.uet.towerdefense.worker.controller;
 
-import com.uet.towerdefense.common.enums.Enemies;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
-import com.uet.towerdefense.common.pojo.base.BaseEntity;
-import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
-import com.uet.towerdefense.common.pojo.towers.BaseTower;
-import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.worker.service.GamePlayScene;
 import javafx.animation.Animation;
 import javafx.animation.Timeline;
@@ -22,11 +17,8 @@ public class SceneController {
 
     private Stage stage;
 
-    private Animation animation;
-
     public void setScene(Stage stage) {
         this.stage = stage;
-        this.animation = new Timeline();
         this.stage.setTitle(GamePlays.TITLE);
         this.stage.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
         this.stage.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
@@ -35,10 +27,7 @@ public class SceneController {
     }
 
     public void toGamePlayScene() {
-        animation.stop();
         gamePlayScene.init(0);
-        BaseEnemy normalEnemy = new NormalEnemy(0, 0, 45);
-        gamePlayScene.addEnemy(normalEnemy);
         stage.setScene(gamePlayScene.getScene());
     }
 }

@@ -24,14 +24,4 @@ public class Bullet extends AbstractDynamicEntity<Long> implements BaseBullet<Lo
     public void setDamage(int damage) {
         this.damage = damage;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

@@ -14,14 +14,4 @@ public class TargetCell extends AbstractCell {
     public String getCellType() {
         return Cells.TARGET;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

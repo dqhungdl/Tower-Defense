@@ -9,14 +9,4 @@ public class ObstacleCell extends AbstractCell {
     public String getCellType() {
         return Cells.OBSTACLE;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

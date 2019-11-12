@@ -9,14 +9,4 @@ public class GrassCell extends AbstractCell {
     public String getCellType() {
         return Cells.GRASS;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

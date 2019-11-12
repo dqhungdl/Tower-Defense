@@ -9,14 +9,4 @@ public class RoadCell extends AbstractCell {
     public String getCellType() {
         return Cells.ROAD;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }
