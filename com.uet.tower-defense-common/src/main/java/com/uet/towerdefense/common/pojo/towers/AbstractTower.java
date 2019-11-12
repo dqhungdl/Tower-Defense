@@ -14,6 +14,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected int level = 0;
 
+    protected int direction;
+
     @Override
     public int getSpeed() {
         return speed;
@@ -62,6 +64,16 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     @Override
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    @Override
+    public int getDirection() {
+        return direction;
+    }
+
+    @Override
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
     @Override

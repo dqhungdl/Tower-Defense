@@ -2,9 +2,9 @@ package com.uet.towerdefense.worker.controller;
 
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
+import com.uet.towerdefense.common.pojo.towers.Bullet;
+import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.worker.service.GamePlayScene;
-import javafx.animation.Animation;
-import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

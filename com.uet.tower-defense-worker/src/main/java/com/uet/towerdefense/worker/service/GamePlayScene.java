@@ -4,17 +4,15 @@ import com.uet.towerdefense.common.data.Pair;
 import com.uet.towerdefense.common.enums.graphics.Directions;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
-import com.uet.towerdefense.common.pojo.base.BaseEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
+import com.uet.towerdefense.common.pojo.towers.BaseBullet;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
+import com.uet.towerdefense.common.pojo.towers.Bullet;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -32,6 +30,8 @@ public class GamePlayScene {
     private Group group;
     private int mapId;
     private List<BaseEnemy> enemies = new ArrayList<>();
+    private List<BaseTower> towers = new ArrayList<>();
+    private List<BaseBullet> bullets = new ArrayList<>();
     private List<Pair> paths = new ArrayList<>();
 
     private BooleanProperty booleanProperty = new SimpleBooleanProperty(true);
@@ -63,7 +63,6 @@ public class GamePlayScene {
             }
     }
 
-    // Init canvas and draw a map
     public void init(int mapId) {
         if (mapId < 0 || mapId >= Maps.MAP_SPRITES.length)
             return;
@@ -91,16 +90,18 @@ public class GamePlayScene {
         animationTimer.start();
     }
 
-    // Tower utils
-    private void addTower(BaseTower tower) {
-
-    }
-
-    // Enemy utils
     private void addEnemy(BaseEnemy enemy) {
         enemy.setX(Maps.MAP_SPAWNS[mapId].getX() * GamePlays.SPRITE_SIZE);
         enemy.setY(Maps.MAP_SPAWNS[mapId].getY() * GamePlays.SPRITE_SIZE);
         enemies.add(enemy);
+    }
+
+    private void addTower(BaseTower tower) {
+        towers.add(tower);
+    }
+
+    public void addBullet(Bullet bullet) {
+        bullets.add(bullet);
     }
 
     private void render() {
@@ -108,11 +109,19 @@ public class GamePlayScene {
         this.group.getChildren().add(new ImageView(AssetUtil.getMapImage(mapId)));
         for (BaseEnemy enemy : enemies)
             enemy.render(group);
+        for (BaseTower tower : towers)
+            tower.render(group);
+        for (BaseBullet bullet : bullets)
+            bullet.render(group);
     }
 
     private void update() {
-        for (int i = 0; i < enemies.size(); i++)
-            enemies.get(i).update(paths);
+        for (BaseEnemy enemy : enemies)
+            enemy.update(paths);
+        for (BaseTower tower : towers)
+            tower.update();
+        for (BaseBullet bullet : bullets)
+            bullet.update();
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getX() == paths.get(paths.size() - 1).getX() * GamePlays.SPRITE_SIZE
                     && enemies.get(i).getY() == paths.get(paths.size() - 1).getY() * GamePlays.SPRITE_SIZE)

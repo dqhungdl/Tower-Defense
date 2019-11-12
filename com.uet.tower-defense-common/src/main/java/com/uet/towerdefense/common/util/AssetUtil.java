@@ -16,4 +16,8 @@ public class AssetUtil {
     public static Image getEnemyImage(String imageId) {
         return new Image("file:src/main/resources/AssetsKit_2/PNG/Retina/towerDefense_tile" + imageId + ".png", GamePlays.ENEMY_SIZE, GamePlays.ENEMY_SIZE, false, false);
     }
+
+    public static Image getBulletImage(String imageId) {
+        return new Image("file:src/main/resources/AssetsKit_2/PNG/Retina/towerDefense_tile" + imageId + ".png", GamePlays.BULLET_SIZE, GamePlays.BULLET_SIZE, false, false);
+    }
 }
