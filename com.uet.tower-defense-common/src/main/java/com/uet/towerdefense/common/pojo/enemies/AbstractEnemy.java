@@ -4,13 +4,15 @@ import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
 
 public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implements BaseEnemy<Long> {
 
-    private int hp;
+    protected int hp;
 
-    private int speed;
+    protected int speed;
 
-    private int defense;
+    protected int defense;
 
-    private int gold;
+    protected int gold;
+
+    protected double direction;
 
     @Override
     public int getHp() {
@@ -50,5 +52,15 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     @Override
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    @Override
+    public double getDirection() {
+        return direction;
+    }
+
+    @Override
+    public void setDirection(double direction) {
+        this.direction = direction;
     }
 }

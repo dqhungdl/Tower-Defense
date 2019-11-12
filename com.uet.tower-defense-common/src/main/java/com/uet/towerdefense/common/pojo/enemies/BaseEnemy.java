@@ -1,6 +1,7 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.pojo.base.BaseDynamicEntity;
+import javafx.scene.canvas.GraphicsContext;
 
 public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
@@ -20,5 +21,15 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setGold(int gold);
 
+    double getDirection();
+
+    void setDirection(double direction);
+
     String getEnemyType();
+
+    String getEnemyImageId();
+
+    void render(GraphicsContext graphicsContext);
+
+    void update();
 }

@@ -4,8 +4,8 @@ import com.uet.towerdefense.common.enums.Towers;
 
 public class NormalTower extends AbstractTower {
 
-    public static final String STAND_IMAGE_ID = "180";
-    public static final String[] TOWER_IMAGE_ID = new String[]{"249", "250"};
+    private static final String STAND_IMAGE_ID = "180";
+    private static final String[] TOWER_IMAGE_ID = new String[]{"249", "250"};
 
     public NormalTower(int x, int y) {
         this.x = x;
