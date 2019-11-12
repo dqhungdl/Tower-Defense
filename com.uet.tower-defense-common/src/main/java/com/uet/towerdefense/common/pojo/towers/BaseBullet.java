@@ -4,9 +4,9 @@ import com.uet.towerdefense.common.pojo.base.BaseEntity;
 
 public interface BaseBullet<Tid extends Object> extends BaseEntity<Tid> {
 
-    int getSpeed();
+    double getSpeed();
 
-    void setSpeed(int speed);
+    void setSpeed(double speed);
 
     int getDamage();
 

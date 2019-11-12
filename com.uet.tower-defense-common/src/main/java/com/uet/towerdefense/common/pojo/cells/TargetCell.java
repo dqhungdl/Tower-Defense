@@ -1,6 +1,7 @@
 package com.uet.towerdefense.common.pojo.cells;
 
 import com.uet.towerdefense.common.enums.Cells;
+import javafx.scene.Group;
 
 public class TargetCell extends AbstractCell {
 
@@ -12,5 +13,15 @@ public class TargetCell extends AbstractCell {
     @Override
     public String getCellType() {
         return Cells.TARGET;
+    }
+
+    @Override
+    public void render(Group group) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

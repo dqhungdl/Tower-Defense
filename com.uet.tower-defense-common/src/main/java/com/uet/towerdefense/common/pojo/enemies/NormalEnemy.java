@@ -1,19 +1,15 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.enums.Enemies;
-import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class NormalEnemy extends AbstractEnemy {
 
     private static final String ENEMY_IMAGE_ID = "245";
 
-    public NormalEnemy(int x, int y, double direction) {
+    public NormalEnemy(int x, int y, int direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -34,17 +30,16 @@ public class NormalEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void render(GraphicsContext graphicsContext) {
-        SnapshotParameters snapshotParameters = new SnapshotParameters();
-        snapshotParameters.setFill(Color.TRANSPARENT);
+    public void render(Group group) {
         ImageView imageView = new ImageView(AssetUtil.getEnemyImage(ENEMY_IMAGE_ID));
+        imageView.setX(x);
+        imageView.setY(y);
         imageView.setRotate(this.direction);
-        Image image = imageView.snapshot(snapshotParameters, null);
-        graphicsContext.drawImage(image, x, y);
+        group.getChildren().addAll(imageView);
     }
 
     @Override
     public void update() {
-        y += speed;
+        y++;
     }
 }

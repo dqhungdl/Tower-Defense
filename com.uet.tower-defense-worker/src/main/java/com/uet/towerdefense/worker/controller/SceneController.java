@@ -2,6 +2,7 @@ package com.uet.towerdefense.worker.controller;
 
 import com.uet.towerdefense.common.enums.Enemies;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
+import com.uet.towerdefense.common.pojo.base.BaseEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
@@ -36,7 +37,8 @@ public class SceneController {
     public void toGamePlayScene() {
         animation.stop();
         gamePlayScene.init(0);
-        gamePlayScene.addEnemy(new NormalEnemy(0, 0, 45));
+        BaseEnemy normalEnemy = new NormalEnemy(0, 0, 45);
+        gamePlayScene.addEnemy(normalEnemy);
         stage.setScene(gamePlayScene.getScene());
     }
 }

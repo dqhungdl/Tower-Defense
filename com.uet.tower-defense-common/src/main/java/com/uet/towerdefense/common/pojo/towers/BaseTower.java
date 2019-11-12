@@ -4,13 +4,13 @@ import com.uet.towerdefense.common.pojo.base.BaseStaticEntity;
 
 public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
-    int getSpeed();
+    double getSpeed();
 
-    void setSpeed(int speed);
+    void setSpeed(double speed);
 
-    int getRange();
+    double getRange();
 
-    void setRange(int range);
+    void setRange(double range);
 
     int getDamage();
 

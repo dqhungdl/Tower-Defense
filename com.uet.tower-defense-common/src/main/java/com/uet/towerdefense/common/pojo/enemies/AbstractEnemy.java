@@ -6,7 +6,7 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
 
     protected int hp;
 
-    protected int speed;
+    protected double speed;
 
     protected int defense;
 
@@ -25,12 +25,12 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

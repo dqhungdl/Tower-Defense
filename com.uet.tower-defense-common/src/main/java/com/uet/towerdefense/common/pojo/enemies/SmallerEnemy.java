@@ -1,7 +1,7 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.enums.Enemies;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Group;
 
 public class SmallerEnemy extends AbstractEnemy {
 
@@ -16,7 +16,7 @@ public class SmallerEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void render(GraphicsContext graphicsContext) {
+    public void render(Group group) {
 
     }
 

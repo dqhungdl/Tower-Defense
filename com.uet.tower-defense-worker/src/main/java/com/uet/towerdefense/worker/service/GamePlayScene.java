@@ -2,14 +2,18 @@ package com.uet.towerdefense.worker.service;
 
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
+import com.uet.towerdefense.common.pojo.base.BaseEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
+import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
+import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,11 +24,9 @@ public class GamePlayScene {
 
     private Scene scene;
     private Canvas canvas;
-    private GraphicsContext graphicsContext;
     private Group group;
     private int mapId;
-    private List<BaseTower> towers = new ArrayList<>();
-    private List<BaseEnemy> enemies = new ArrayList<>();
+    private List<BaseEntity> entities = new ArrayList<>();
 
     public Scene getScene() {
         return scene;
@@ -40,48 +42,47 @@ public class GamePlayScene {
             return;
         this.mapId = mapId;
         this.canvas = new Canvas(GamePlays.WIDTH * GamePlays.SPRITE_SIZE, GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
-        this.graphicsContext = canvas.getGraphicsContext2D();
         this.group = new Group();
         this.group.getChildren().add(canvas);
         this.scene = new Scene(group);
-        // Draw a map
-        graphicsContext.drawImage(AssetUtil.getMapImage(mapId), 0, 0);
+        this.group.getChildren().add(new ImageView(AssetUtil.getMapImage(mapId)));
     }
 
     // Tower utils
     public void addTower(BaseTower tower) {
-        if (tower.getX() + 1 >= GamePlays.HEIGHT || tower.getY() + 1 >= GamePlays.WIDTH)
-            return;
-        for (int i = 0; i <= 1; i++)
-            for (int j = 0; j <= 1; j++)
-                if (Maps.MAP_SPRITES[mapId][tower.getX() + i][tower.getY() + j] != Maps.GRASS)
-                    return;
-        graphicsContext.drawImage(AssetUtil.getTowerImage(tower.getStandImageId()), tower.getY(), tower.getX());
-        graphicsContext.drawImage(AssetUtil.getTowerImage(tower.getTowerImageId()), tower.getY(), tower.getX() - 10);
-        towers.add(tower);
-    }
-
-    public void towerLevelUp(int x, int y) {
-        for (BaseTower tower : towers)
-            if (tower.getX() == x && tower.getY() == y) {
-                tower.levelUp();
-                graphicsContext.drawImage(AssetUtil.getTowerImage(tower.getStandImageId()), tower.getY() * GamePlays.SPRITE_SIZE, tower.getX() * GamePlays.SPRITE_SIZE);
-                graphicsContext.drawImage(AssetUtil.getTowerImage(tower.getTowerImageId()), tower.getY() * GamePlays.SPRITE_SIZE, tower.getX() * GamePlays.SPRITE_SIZE - 10);
-                break;
+        entities.add(tower);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                render();
+                update();
             }
+        };
+        animationTimer.start();
     }
 
     // Enemy utils
     public void addEnemy(BaseEnemy enemy) {
-        enemy.render(graphicsContext);
-        enemies.add(enemy);
+        entities.add(enemy);
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                enemy.render(graphicsContext);
-                enemy.update();
+                render();
+                update();
             }
         };
         animationTimer.start();
+    }
+
+    private void render() {
+        this.group.getChildren().clear();
+        this.group.getChildren().add(new ImageView(AssetUtil.getMapImage(mapId)));
+        for (BaseEntity entity : entities)
+            entity.render(group);
+    }
+
+    private void update() {
+        for (BaseEntity entity : entities)
+            entity.update();
     }
 }
