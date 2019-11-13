@@ -14,6 +14,9 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
 
     protected int speed;

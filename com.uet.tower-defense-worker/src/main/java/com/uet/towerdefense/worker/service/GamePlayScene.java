@@ -12,12 +12,10 @@ import com.uet.towerdefense.common.pojo.towers.BaseTower;
 import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +25,6 @@ import java.util.List;
 public class GamePlayScene {
 
     private Scene scene;
-    private Canvas canvas;
     private Group group;
     private int mapId;
     private long latestTimestamp;
@@ -92,9 +89,7 @@ public class GamePlayScene {
         });
         group.getChildren().addAll(sourceFld);
         /* Drag and drop sample */
-
         AnimationTimer animationTimer = new AnimationTimer() {
-
             long lastAddEnemies = 0;
 
             @Override

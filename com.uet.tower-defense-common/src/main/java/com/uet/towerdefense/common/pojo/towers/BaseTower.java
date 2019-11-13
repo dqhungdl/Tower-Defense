@@ -5,9 +5,12 @@ import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import javafx.scene.Group;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
+
+    List<BaseBullet> bullets = new ArrayList<>();
 
     int getSpeed();
 

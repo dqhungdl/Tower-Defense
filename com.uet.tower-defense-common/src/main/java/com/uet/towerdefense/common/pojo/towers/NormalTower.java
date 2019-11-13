@@ -1,6 +1,10 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.enums.Towers;
+import com.uet.towerdefense.common.enums.graphics.GamePlays;
+import com.uet.towerdefense.common.util.AssetUtil;
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
 
 public class NormalTower extends AbstractTower {
 
