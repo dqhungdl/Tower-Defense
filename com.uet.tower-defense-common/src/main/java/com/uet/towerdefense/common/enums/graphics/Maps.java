@@ -5,12 +5,6 @@ import com.uet.towerdefense.common.pojo.cells.TargetCell;
 
 public class Maps {
 
-    public static final int GRASS = 0;
-    public static final int ROAD = 1;
-    public static final int OBSTACLE = 2;
-    public static final int SPAWN = 3;
-    public static final int TARGET = 4;
-
     public static final SpawnCell[] MAP_SPAWNS = new SpawnCell[]{
             new SpawnCell(21, 30)
     };

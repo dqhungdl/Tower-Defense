@@ -1,9 +1,9 @@
 package com.uet.towerdefense.common.enums;
 
 public class Cells {
-    public static final String SPAWN = "Spawn";
-    public static final String TARGET = "Target";
-    public static final String ROAD = "Road";
-    public static final String GRASS = "Grass";
-    public static final String OBSTACLE = "Obstacle";
+    public static final int GRASS = 0;
+    public static final int ROAD = 1;
+    public static final int OBSTACLE = 2;
+    public static final int SPAWN = 3;
+    public static final int TARGET = 4;
 }

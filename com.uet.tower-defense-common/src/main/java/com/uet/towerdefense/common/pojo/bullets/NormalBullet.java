@@ -5,7 +5,7 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class NormalBullet extends AbstractBullet {
 
-    private static final String BULLET_IMAGE_ID = "295";
+    private static final String BULLET_IMAGE_ID = "275";
 
     public NormalBullet(int x, int y, int direction, int damage, BaseEnemy targetEnemy) {
         this.x = x;

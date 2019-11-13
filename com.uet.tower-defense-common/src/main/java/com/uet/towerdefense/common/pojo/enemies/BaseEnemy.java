@@ -1,9 +1,9 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.data.Coordinate;
+import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.pojo.base.BaseDynamicEntity;
-import javafx.scene.Group;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     String getEnemyImageId();
 
-    void render(Group group);
+    void render(List<NodeCompare> nodes);
 
     void update(List<Coordinate> paths);
 }

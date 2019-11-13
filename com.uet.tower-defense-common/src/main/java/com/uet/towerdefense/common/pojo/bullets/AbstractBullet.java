@@ -1,11 +1,14 @@
 package com.uet.towerdefense.common.pojo.bullets;
 
+import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.enums.Bullets;
+import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+
+import java.util.List;
 
 public abstract class AbstractBullet extends AbstractDynamicEntity<Long> implements BaseBullet<Long> {
 
@@ -56,18 +59,19 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
     }
 
     @Override
-    public void render(Group group) {
+    public void render(List<NodeCompare> nodes) {
         ImageView imageView = new ImageView(AssetUtil.getBulletImage(getBulletImageId()));
         imageView.setX(y);
         imageView.setY(x);
         imageView.setRotate(direction);
-        group.getChildren().add(imageView);
+        imageView.setId(RenderLevels.BULLET);
+        nodes.add(new NodeCompare(imageView));
     }
 
     @Override
     public void update() {
-        int targetX = targetEnemy.getX() + targetEnemy.getVector().getDx() * targetEnemy.getSpeed();
-        int targetY = targetEnemy.getY() + targetEnemy.getVector().getDy() * targetEnemy.getSpeed();
+        int targetX = targetEnemy.getX();
+        int targetY = targetEnemy.getY();
         x += (targetX - x) / speed;
         y += (targetY - y) / speed;
         double distance = Math.sqrt(Math.pow(targetEnemy.getX() - x, 2) + Math.pow(targetEnemy.getY() - y, 2));

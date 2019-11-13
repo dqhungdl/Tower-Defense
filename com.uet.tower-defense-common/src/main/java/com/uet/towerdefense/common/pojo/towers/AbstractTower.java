@@ -1,18 +1,16 @@
 package com.uet.towerdefense.common.pojo.towers;
 
+import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
+import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
-import com.uet.towerdefense.common.enums.graphics.Times;
 import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.bullets.NormalBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.scene.Group;
+import com.uet.towerdefense.common.util.CompareUtil;
 import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,16 +121,18 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
-    public void render(Group group) {
+    public void render(List<NodeCompare> nodes) {
         ImageView imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
-        ImageView imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
         imageViewStand.setX(y);
         imageViewStand.setY(x);
+        imageViewStand.setId(RenderLevels.TOWER_STAND);
+        nodes.add(new NodeCompare(imageViewStand));
+        ImageView imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
         imageViewTower.setX(y);
         imageViewTower.setY(x);
         imageViewTower.setRotate(this.direction);
-        group.getChildren().add(imageViewStand);
-        group.getChildren().add(imageViewTower);
+        imageViewTower.setId(RenderLevels.TOWER);
+        nodes.add(new NodeCompare(imageViewTower));
     }
 
     @Override
@@ -148,7 +148,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
                 targetEnemy = enemy;
             }
         }
-        if (minDistance <= range) {
+        if (minDistance <= range && currentTimestamp - lastFireTimestamp >= GamePlays.SECOND_TO_NANO * speed) {
             Vector v1 = new Vector(0, 1);
             Vector v2 = new Vector(targetEnemy.getX() - towerX, targetEnemy.getY() - towerY);
             double distance1 = Math.sqrt(Math.pow(v1.getDx(), 2) + Math.pow(v1.getDy(), 2));
@@ -158,10 +158,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
                 angle = 360.0 - angle;
             angle += 180.0;
             direction = (int) angle % 360;
-            if (currentTimestamp - lastFireTimestamp >= Times.SECOND_TO_NANO * speed) {
-                lastFireTimestamp = currentTimestamp;
-                bullets.add(new NormalBullet(x, y, direction, damage, targetEnemy));
-            }
+            lastFireTimestamp = currentTimestamp;
+            bullets.add(new NormalBullet(x, y, 0, damage, targetEnemy));
         }
     }
 }

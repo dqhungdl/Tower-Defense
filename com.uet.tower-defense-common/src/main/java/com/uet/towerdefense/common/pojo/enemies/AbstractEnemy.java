@@ -1,11 +1,12 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.data.Coordinate;
+import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
+import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
 import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
@@ -85,12 +86,13 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public void render(Group group) {
+    public void render(List<NodeCompare> nodes) {
         ImageView imageView = new ImageView(AssetUtil.getEnemyImage(getEnemyImageId()));
         imageView.setX(y - GamePlays.SPRITE_SIZE / 2);
         imageView.setY(x - GamePlays.SPRITE_SIZE / 2);
         imageView.setRotate(this.direction);
-        group.getChildren().add(imageView);
+        imageView.setId(RenderLevels.ENEMY);
+        nodes.add(new NodeCompare(imageView));
     }
 
     @Override

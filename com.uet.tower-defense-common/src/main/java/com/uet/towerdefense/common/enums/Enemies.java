@@ -6,8 +6,8 @@ public class Enemies {
     public static final String SMALLER = "Smaller";
     public static final String BOSS = "Boss";
 
-    public static final int NORMAL_HP = 2;
-    public static final int NORMAL_SPEED = 2;
+    public static final int NORMAL_HP = 1;
+    public static final int NORMAL_SPEED = 1;
     public static final int NORMAL_DEFENSE = 1;
     public static final int NORMAL_GOLD = 1;
 }

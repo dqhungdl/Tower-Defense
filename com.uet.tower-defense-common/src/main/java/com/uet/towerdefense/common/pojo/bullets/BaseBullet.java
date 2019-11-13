@@ -1,8 +1,10 @@
 package com.uet.towerdefense.common.pojo.bullets;
 
+import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.pojo.base.BaseDynamicEntity;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
-import javafx.scene.Group;
+
+import java.util.List;
 
 public interface BaseBullet<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
@@ -26,7 +28,7 @@ public interface BaseBullet<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     String getBulletImageId();
 
-    void render(Group group);
+    void render(List<NodeCompare> nodes);
 
     void update();
 }

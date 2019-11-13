@@ -10,6 +10,4 @@ public class Directions {
             new Vector(0, 1),
             new Vector(1, 0),
     };
-
-    public static final int[] DEGREES = new int[]{};
 }
