@@ -1,7 +1,11 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.pojo.base.BaseStaticEntity;
+import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
+import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import javafx.scene.Group;
+
+import java.util.List;
 
 public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
@@ -31,13 +35,21 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void setDirection(int direction);
 
+    long getLastFireTimestamp();
+
+    void setLastFireTimestamp(long lastFireTimestamp);
+
     String getTowerType();
 
     String getStandImageId();
 
     String getTowerImageId();
 
+    List<BaseBullet> getBullets();
+
+    void setBullets(List<BaseBullet> bullets);
+
     void render(Group group);
 
-    void update();
+    void update(List<BaseEnemy> enemies, long currentTimestamp);
 }

@@ -1,6 +1,6 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
-import com.uet.towerdefense.common.data.Pair;
+import com.uet.towerdefense.common.data.Coordinate;
 import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
@@ -94,14 +94,14 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public void update(List<Pair> paths) {
+    public void update(List<Coordinate> paths) {
         for (int i = paths.size() - 2; i >= 0; i--) {
             int startX = paths.get(i).getX() * GamePlays.SPRITE_SIZE;
             int startY = paths.get(i).getY() * GamePlays.SPRITE_SIZE;
             int endX = paths.get(i + 1).getX() * GamePlays.SPRITE_SIZE;
             int endY = paths.get(i + 1).getY() * GamePlays.SPRITE_SIZE;
             if (Math.min(startX, endX) <= x && x <= Math.max(startX, endX) && Math.min(startY, endY) <= y && y <= Math.max(startY, endY)) {
-                Vector vector = new Vector((endX - startX == 0 ? 0 : endX > startX ? 1 : -1), (endY - startY == 0 ? 0 : endY > startY ? 1 : -1));
+                vector = new Vector((endX - startX == 0 ? 0 : endX > startX ? 1 : -1), (endY - startY == 0 ? 0 : endY > startY ? 1 : -1));
                 if (vector.equals(new Vector(0, 1)))
                     direction = 0;
                 if (vector.equals(new Vector(1, 0)))

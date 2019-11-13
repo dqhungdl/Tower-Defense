@@ -1,6 +1,6 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
-import com.uet.towerdefense.common.data.Pair;
+import com.uet.towerdefense.common.data.Coordinate;
 import com.uet.towerdefense.common.enums.Enemies;
 import javafx.scene.Group;
 
@@ -24,7 +24,7 @@ public class TankerEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void update(List<Pair> paths) {
+    public void update(List<Coordinate> paths) {
 
     }
 }

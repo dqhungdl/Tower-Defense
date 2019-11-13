@@ -1,7 +1,6 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.enums.Towers;
-import javafx.scene.Group;
 
 public class MachineGunTower extends AbstractTower {
 
@@ -18,15 +17,5 @@ public class MachineGunTower extends AbstractTower {
     @Override
     public String getTowerImageId() {
         return null;
-    }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
     }
 }

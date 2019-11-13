@@ -21,7 +21,7 @@ public class TowerDefenseApplication extends Application {
     }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         applicationContext = SpringApplication.run(TowerDefenseApplication.class);
         applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
     }

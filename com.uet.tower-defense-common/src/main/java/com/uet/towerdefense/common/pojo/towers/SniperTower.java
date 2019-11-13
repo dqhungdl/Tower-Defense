@@ -19,14 +19,4 @@ public class SniperTower extends AbstractTower {
     public String getTowerImageId() {
         return null;
     }
-
-    @Override
-    public void render(Group group) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }
