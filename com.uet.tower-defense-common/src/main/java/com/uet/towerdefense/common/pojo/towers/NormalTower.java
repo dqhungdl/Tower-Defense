@@ -4,9 +4,7 @@ import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class NormalTower extends AbstractTower {
 
@@ -21,6 +19,7 @@ public class NormalTower extends AbstractTower {
         range = Towers.NORMAL_RANGE[level];
         damage = Towers.NORMAL_DAMAGE[level];
         gold = Towers.NORMAL_GOLD[level];
+        addBullet(new Bullet(x,y,315));
     }
 
     @Override
@@ -47,16 +46,19 @@ public class NormalTower extends AbstractTower {
         imageViewStand.setX(x);
         imageViewStand.setY(y);
         imageViewTower.setRotate(this.direction);
+        for (BaseBullet bullet : bullets)  bullet.render(group);
         group.getChildren().addAll(imageViewStand);
         group.getChildren().addAll(imageViewTower);
     }
 
     @Override
     public void update() {
-        /*if (direction<360)
+        if (direction<360)
         {
             direction++;
         }
-        else direction = 0;*/
+        else direction = 0;
+        for (BaseBullet bullet : bullets)  bullet.update();
     }
+
 }

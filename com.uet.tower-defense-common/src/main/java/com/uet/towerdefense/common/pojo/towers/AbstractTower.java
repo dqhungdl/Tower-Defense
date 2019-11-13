@@ -2,7 +2,12 @@ package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
+
+    protected List<BaseBullet> bullets = new ArrayList<>();
 
     protected int speed;
 
@@ -82,4 +87,10 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             return;
         level++;
     }
+
+    @Override
+    public void addBullet(Bullet bullet) {
+        bullets.add(bullet);
+    }
+
 }

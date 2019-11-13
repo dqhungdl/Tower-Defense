@@ -9,6 +9,7 @@ import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseBullet;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
 import com.uet.towerdefense.common.pojo.towers.Bullet;
+import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
@@ -19,6 +20,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
 import org.springframework.stereotype.Service;
 
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class GamePlayScene {
     private int mapId;
     private List<BaseEnemy> enemies = new ArrayList<>();
     private List<BaseTower> towers = new ArrayList<>();
-    private List<BaseBullet> bullets = new ArrayList<>();
+    //private List<BaseBullet> bullets = new ArrayList<>();
     private List<Pair> paths = new ArrayList<>();
 
     private BooleanProperty booleanProperty = new SimpleBooleanProperty(true);
@@ -73,10 +75,12 @@ public class GamePlayScene {
         this.scene = new Scene(group);
         this.group.getChildren().add(new ImageView(AssetUtil.getMapImage(mapId)));
         findPath(Maps.MAP_SPAWNS[mapId].getX(), Maps.MAP_SPAWNS[mapId].getY(), -1);
+
+        addTower(new NormalTower(GamePlays.SPRITE_SIZE*19,GamePlays.SPRITE_SIZE*6,135));
+        addTower(new NormalTower(GamePlays.SPRITE_SIZE*18,GamePlays.SPRITE_SIZE*18,135));
+
         AnimationTimer animationTimer = new AnimationTimer() {
-
             long lastAddEnemies = 0;
-
             @Override
             public void handle(long timestamp) {
                 render();
@@ -97,22 +101,20 @@ public class GamePlayScene {
     }
 
     private void addTower(BaseTower tower) {
+
         towers.add(tower);
     }
 
-    public void addBullet(Bullet bullet) {
-        bullets.add(bullet);
-    }
 
     private void render() {
         this.group.getChildren().clear();
         this.group.getChildren().add(new ImageView(AssetUtil.getMapImage(mapId)));
+
         for (BaseEnemy enemy : enemies)
             enemy.render(group);
         for (BaseTower tower : towers)
             tower.render(group);
-        for (BaseBullet bullet : bullets)
-            bullet.render(group);
+
     }
 
     private void update() {
@@ -120,8 +122,8 @@ public class GamePlayScene {
             enemy.update(paths);
         for (BaseTower tower : towers)
             tower.update();
-        for (BaseBullet bullet : bullets)
-            bullet.update();
+
+
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getX() == paths.get(paths.size() - 1).getX() * GamePlays.SPRITE_SIZE
                     && enemies.get(i).getY() == paths.get(paths.size() - 1).getY() * GamePlays.SPRITE_SIZE)
