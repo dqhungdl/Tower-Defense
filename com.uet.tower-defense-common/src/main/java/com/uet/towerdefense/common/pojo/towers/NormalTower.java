@@ -18,6 +18,7 @@ public class NormalTower extends AbstractTower {
         range = Towers.NORMAL_RANGE[level];
         damage = Towers.NORMAL_DAMAGE[level];
         gold = Towers.NORMAL_GOLD[level];
+        init();
     }
 
     @Override

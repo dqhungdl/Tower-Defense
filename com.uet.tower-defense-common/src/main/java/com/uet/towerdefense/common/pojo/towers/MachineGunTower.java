@@ -17,6 +17,7 @@ public class MachineGunTower extends AbstractTower {
         range = Towers.MACHINE_GUN_RANGE[level];
         damage = Towers.MACHINE_GUN_DAMAGE[level];
         gold = Towers.MACHINE_GUN_GOLD[level];
+        init();
     }
 
     @Override

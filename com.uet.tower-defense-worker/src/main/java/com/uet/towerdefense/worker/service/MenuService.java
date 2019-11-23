@@ -10,6 +10,8 @@ import com.uet.towerdefense.common.pojo.towers.NormalTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,19 +50,27 @@ public class MenuService {
         tempImageViewStand.setId(RenderLevels.TEMP_DRAG_DROP);
         ImageView tempImageViewTower = new ImageView(AssetUtil.getTowerImage(tower.getTowerImageId()));
         tempImageViewTower.setId(RenderLevels.TEMP_DRAG_DROP);
+        Circle rangeCircle = new Circle();
+        rangeCircle.setRadius(tower.getRange());
+        rangeCircle.setFill(Color.BLUE);
+        rangeCircle.setOpacity(0.3);
+        rangeCircle.setId(RenderLevels.TEMP_DRAG_DROP);
         imageViewTower.setOnMouseDragged(mouseEvent -> {
             tempImageViewStand.setX(mouseEvent.getX() - GamePlays.TOWER_SIZE / 2);
             tempImageViewStand.setY(mouseEvent.getY() - GamePlays.TOWER_SIZE / 2);
             tempImageViewTower.setX(mouseEvent.getX() - GamePlays.TOWER_SIZE / 2);
             tempImageViewTower.setY(mouseEvent.getY() - GamePlays.TOWER_SIZE / 2);
+            rangeCircle.setCenterX(mouseEvent.getX());
+            rangeCircle.setCenterY(mouseEvent.getY());
             deleteDragDropItem();
             nodes.add(new NodeCompare(tempImageViewStand));
             nodes.add(new NodeCompare(tempImageViewTower));
+            nodes.add(new NodeCompare(rangeCircle));
         });
-        imageViewTower.setOnMouseReleased(event -> {
+        imageViewTower.setOnMouseReleased(mouseEvent -> {
             deleteDragDropItem();
-            int x = (int) event.getY() - GamePlays.TOWER_SIZE / 2;
-            int y = (int) event.getX() - GamePlays.TOWER_SIZE / 2;
+            int x = (int) mouseEvent.getY() - GamePlays.TOWER_SIZE / 2;
+            int y = (int) mouseEvent.getX() - GamePlays.TOWER_SIZE / 2;
             BaseTower addedTower = null;
             if (tower instanceof NormalTower)
                 addedTower = new NormalTower(x, y);
@@ -87,11 +97,11 @@ public class MenuService {
                     }
                 }
             }
-            event.setDragDetect(false);
+            mouseEvent.setDragDetect(false);
         });
         imageViewStand.setId(RenderLevels.DRAG_DROP);
-        nodes.add(new NodeCompare(imageViewStand));
         imageViewTower.setId(RenderLevels.DRAG_DROP);
+        nodes.add(new NodeCompare(imageViewStand));
         nodes.add(new NodeCompare(imageViewTower));
     }
 

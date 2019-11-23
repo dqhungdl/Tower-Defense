@@ -54,6 +54,8 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void addBullet(BaseEnemy enemy);
 
+    void init();
+
     void render(List<NodeCompare> nodes);
 
     void update(List<BaseEnemy> enemies, long currentTimestamp);

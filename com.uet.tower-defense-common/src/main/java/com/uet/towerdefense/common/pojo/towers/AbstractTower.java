@@ -3,13 +3,21 @@ package com.uet.towerdefense.common.pojo.towers;
 import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.bullets.NormalBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.util.AssetUtil;
+import javafx.event.EventHandler;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +37,12 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     protected int direction;
 
     protected long lastFireTimestamp = 0;
+
+    protected ImageView imageViewStand;
+
+    protected ImageView imageViewTower;
+
+    protected Double opacity = Animations.NORMAL_OPACITY;
 
     protected List<BaseBullet> bullets = new ArrayList<>();
 
@@ -120,17 +134,23 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
+    public void init() {
+        imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
+        imageViewStand.setId(RenderLevels.TOWER_STAND);
+        imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
+        imageViewTower.setId(RenderLevels.TOWER);
+    }
+
+    @Override
     public void render(List<NodeCompare> nodes) {
-        ImageView imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
         imageViewStand.setX(y);
         imageViewStand.setY(x);
-        imageViewStand.setId(RenderLevels.TOWER_STAND);
-        nodes.add(new NodeCompare(imageViewStand));
-        ImageView imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
+        imageViewStand.setOpacity(opacity);
         imageViewTower.setX(y);
         imageViewTower.setY(x);
+        imageViewTower.setOpacity(opacity);
         imageViewTower.setRotate(this.direction);
-        imageViewTower.setId(RenderLevels.TOWER);
+        nodes.add(new NodeCompare(imageViewStand));
         nodes.add(new NodeCompare(imageViewTower));
     }
 
@@ -159,7 +179,6 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             direction = (int) angle % 360;
             lastFireTimestamp = currentTimestamp;
             addBullet(targetEnemy);
-//            bullets.add(new NormalBullet(x, y, direction, damage, targetEnemy));
         }
     }
 }
