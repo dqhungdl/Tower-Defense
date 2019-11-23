@@ -7,13 +7,14 @@ public class MachineGunBullet extends AbstractBullet {
 
     private static final String BULLET_IMAGE_ID = "272";
 
-    public MachineGunBullet(int x, int y, int direction, int damage, BaseEnemy targetEnemy) {
+    public MachineGunBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.damage = damage;
         this.speed = Bullets.MACHINE_GUN_SPEED;
         this.targetEnemy = targetEnemy;
+        init();
     }
 
     @Override

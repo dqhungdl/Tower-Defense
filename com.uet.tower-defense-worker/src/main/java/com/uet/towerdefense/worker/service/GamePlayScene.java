@@ -1,7 +1,5 @@
 package com.uet.towerdefense.worker.service;
 
-import com.uet.towerdefense.common.data.NodeCompare;
-import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
@@ -9,8 +7,6 @@ import com.uet.towerdefense.common.pojo.enemies.NormalEnemy;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +14,9 @@ import java.util.*;
 
 @Service
 public class GamePlayScene {
+
+    @Autowired
+    private NodeService nodeService;
 
     @Autowired
     private MapService mapService;
@@ -29,7 +28,7 @@ public class GamePlayScene {
     private Group group;
     private int mapId;
     private long latestTimestamp;
-    private List<NodeCompare> nodes;
+    private AnimationTimer animationTimer;
 
     public Scene getScene() {
         return scene;
@@ -42,13 +41,13 @@ public class GamePlayScene {
     public void init(int mapId) {
         if (mapId < 0 || mapId >= Maps.MAP_SPRITES.length)
             return;
-        nodes = new ArrayList<>();
         this.mapId = mapId;
         this.group = new Group();
         this.scene = new Scene(group);
-        mapService.init(nodes, mapId);
-        menuService.init(group, nodes);
-        AnimationTimer animationTimer = new AnimationTimer() {
+        nodeService.setNodes(group.getChildren());
+        mapService.init(mapId);
+        menuService.init();
+        animationTimer = new AnimationTimer() {
 
             private long lastAddEnemies = (new Date()).getTime() + GamePlays.SECOND_START_GAME;
             private LinkedList<BaseEnemy> enemies = new LinkedList<>();
@@ -72,23 +71,10 @@ public class GamePlayScene {
     }
 
     private void update() {
-        for (int i = 0; i < group.getChildren().size(); i++) {
-            if (group.getChildren().get(i).getId().equals(RenderLevels.MAP)
-                    || group.getChildren().get(i).getId().equals(RenderLevels.DRAG_DROP)
-                    || group.getChildren().get(i).getId().equals(RenderLevels.TEMP_DRAG_DROP))
-                continue;
-            group.getChildren().remove(i--);
-        }
-        Collections.sort(nodes);
-        int p = 0;
-        for (NodeCompare node : nodes) {
-            while (p < group.getChildren().size() && node.getNode().getId().compareTo(group.getChildren().get(p).getId()) >= 0)
-                p++;
-            group.getChildren().add(p, node.getNode());
-        }
-        nodes.clear();
+        animationTimer.stop();
         mapService.render();
         mapService.update(latestTimestamp);
         menuService.render();
+        animationTimer.start();
     }
 }

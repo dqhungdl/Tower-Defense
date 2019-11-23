@@ -11,6 +11,7 @@ public class NormalEnemy extends AbstractEnemy {
         speed = Enemies.NORMAL_SPEED;
         defense = Enemies.NORMAL_DEFENSE;
         gold = Enemies.NORMAL_GOLD;
+        init();
     }
 
     @Override

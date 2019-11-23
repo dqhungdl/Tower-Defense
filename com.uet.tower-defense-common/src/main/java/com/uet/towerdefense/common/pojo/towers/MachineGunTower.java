@@ -3,13 +3,16 @@ package com.uet.towerdefense.common.pojo.towers;
 import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.pojo.bullets.MachineGunBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
+import javafx.scene.Node;
+
+import java.util.List;
 
 public class MachineGunTower extends AbstractTower {
 
     private static final String STAND_IMAGE_ID = "182";
     private static final String[] TOWER_IMAGE_ID = new String[]{"203", "203"};
 
-    public MachineGunTower(int x, int y) {
+    public MachineGunTower(int x, int y, List<Node> nodes) {
         this.x = x;
         this.y = y;
         this.direction = 0;
@@ -17,7 +20,7 @@ public class MachineGunTower extends AbstractTower {
         range = Towers.MACHINE_GUN_RANGE[level];
         damage = Towers.MACHINE_GUN_DAMAGE[level];
         gold = Towers.MACHINE_GUN_GOLD[level];
-        init();
+        init(nodes);
     }
 
     @Override

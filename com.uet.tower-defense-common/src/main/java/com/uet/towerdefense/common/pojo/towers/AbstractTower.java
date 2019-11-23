@@ -1,23 +1,17 @@
 package com.uet.towerdefense.common.pojo.towers;
 
-import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
 import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
-import com.uet.towerdefense.common.pojo.bullets.NormalBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.event.EventHandler;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Reflection;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +32,15 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected long lastFireTimestamp = 0;
 
+    protected List<BaseBullet> bullets = new ArrayList<>();
+
     protected ImageView imageViewStand;
 
     protected ImageView imageViewTower;
 
     protected Double opacity = Animations.NORMAL_OPACITY;
 
-    protected List<BaseBullet> bullets = new ArrayList<>();
+    protected Circle rangeCircle;
 
     @Override
     public double getSpeed() {
@@ -127,6 +123,16 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
+    public Circle getRangeCircle() {
+        return rangeCircle;
+    }
+
+    @Override
+    public void setRangeCircle(Circle rangeCircle) {
+        this.rangeCircle = rangeCircle;
+    }
+
+    @Override
     public void levelUp() {
         if (level == 1)
             return;
@@ -134,15 +140,78 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
-    public void init() {
-        imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
-        imageViewStand.setId(RenderLevels.TOWER_STAND);
-        imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
-        imageViewTower.setId(RenderLevels.TOWER);
+    public ImageView getImageViewStand() {
+        return imageViewStand;
     }
 
     @Override
-    public void render(List<NodeCompare> nodes) {
+    public void setImageViewStand(ImageView imageViewStand) {
+        this.imageViewStand = imageViewStand;
+    }
+
+    @Override
+    public ImageView getImageViewTower() {
+        return imageViewTower;
+    }
+
+    @Override
+    public void setImageViewTower(ImageView imageViewTower) {
+        this.imageViewTower = imageViewTower;
+    }
+
+    private void addRangeCircle(List<Node> nodes) {
+        for (Node node : nodes)
+            if (node == rangeCircle)
+                return;
+        for (int i = 0; i < nodes.size(); i++)
+            if (Integer.parseInt(nodes.get(i).getId()) > Integer.parseInt(rangeCircle.getId())) {
+                nodes.add(i, rangeCircle);
+                return;
+            }
+        nodes.add(rangeCircle);
+    }
+
+    private void removeRangeCircle(List<Node> nodes) {
+        for (Node node : nodes)
+            if (node == rangeCircle) {
+                nodes.remove(node);
+                break;
+            }
+    }
+
+    @Override
+    public void init(List<Node> nodes) {
+        imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
+        imageViewStand.setId(RenderLevels.TOWER_STAND);
+        rangeCircle = new Circle();
+        rangeCircle.setCenterX(y + GamePlays.TOWER_SIZE / 2);
+        rangeCircle.setCenterY(x + GamePlays.TOWER_SIZE / 2);
+        rangeCircle.setRadius(range);
+        rangeCircle.setFill(Color.BLUE);
+        rangeCircle.setOpacity(Animations.LIGHT_OPACITY);
+        rangeCircle.setId(RenderLevels.ANIMATION);
+        imageViewStand.setOnMouseEntered(mouseEvent -> {
+            opacity = Animations.DARK_OPACITY;
+            addRangeCircle(nodes);
+        });
+        imageViewStand.setOnMouseExited(mouseEvent -> {
+            opacity = Animations.NORMAL_OPACITY;
+            removeRangeCircle(nodes);
+        });
+        imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
+        imageViewTower.setId(RenderLevels.TOWER);
+        imageViewTower.setOnMouseEntered(mouseEvent -> {
+            opacity = Animations.DARK_OPACITY;
+            addRangeCircle(nodes);
+        });
+        imageViewTower.setOnMouseExited(mouseEvent -> {
+            opacity = Animations.NORMAL_OPACITY;
+            removeRangeCircle(nodes);
+        });
+    }
+
+    @Override
+    public void render() {
         imageViewStand.setX(y);
         imageViewStand.setY(x);
         imageViewStand.setOpacity(opacity);
@@ -150,14 +219,12 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         imageViewTower.setY(x);
         imageViewTower.setOpacity(opacity);
         imageViewTower.setRotate(this.direction);
-        nodes.add(new NodeCompare(imageViewStand));
-        nodes.add(new NodeCompare(imageViewTower));
     }
 
     @Override
     public void update(List<BaseEnemy> enemies, long currentTimestamp) {
-        int towerX = x + GamePlays.TOWER_SIZE / 2;
-        int towerY = y + GamePlays.TOWER_SIZE / 2;
+        double towerX = x + GamePlays.TOWER_SIZE / 2;
+        double towerY = y + GamePlays.TOWER_SIZE / 2;
         int minDistance = 1000000000;
         BaseEnemy targetEnemy = null;
         for (BaseEnemy enemy : enemies) {

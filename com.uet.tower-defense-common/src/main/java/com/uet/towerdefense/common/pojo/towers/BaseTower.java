@@ -1,9 +1,11 @@
 package com.uet.towerdefense.common.pojo.towers;
 
-import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.pojo.base.BaseStaticEntity;
 import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +56,21 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void addBullet(BaseEnemy enemy);
 
-    void init();
+    ImageView getImageViewStand();
 
-    void render(List<NodeCompare> nodes);
+    void setImageViewStand(ImageView imageViewStand);
+
+    ImageView getImageViewTower();
+
+    void setImageViewTower(ImageView imageViewTower);
+
+    Circle getRangeCircle();
+
+    void setRangeCircle(Circle circle);
+
+    void init(List<Node> nodes);
+
+    void render();
 
     void update(List<BaseEnemy> enemies, long currentTimestamp);
 }

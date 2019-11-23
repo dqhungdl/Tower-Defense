@@ -2,11 +2,11 @@ package com.uet.towerdefense.common.data;
 
 public class Vector {
 
-    private int dx;
+    private double dx;
 
-    private int dy;
+    private double dy;
 
-    public Vector(int dx, int dy) {
+    public Vector(double dx, double dy) {
         this.dx = dx;
         this.dy = dy;
     }
@@ -16,19 +16,19 @@ public class Vector {
         this.dy = vector.dy;
     }
 
-    public int getDx() {
+    public double getDx() {
         return dx;
     }
 
-    public void setDx(int dx) {
+    public void setDx(double dx) {
         this.dx = dx;
     }
 
-    public int getDy() {
+    public double getDy() {
         return dy;
     }
 
-    public void setDy(int dy) {
+    public void setDy(double dy) {
         this.dy = dy;
     }
 

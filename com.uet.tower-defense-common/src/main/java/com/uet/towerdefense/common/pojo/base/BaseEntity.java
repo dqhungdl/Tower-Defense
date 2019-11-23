@@ -1,7 +1,5 @@
 package com.uet.towerdefense.common.pojo.base;
 
-import javafx.scene.Group;
-
 import java.io.Serializable;
 
 public interface BaseEntity<Tid extends Object> extends Serializable {
@@ -10,13 +8,13 @@ public interface BaseEntity<Tid extends Object> extends Serializable {
 
     void setId(Tid id);
 
-    int getX();
+    double getX();
 
-    void setX(int x);
+    void setX(double x);
 
-    int getY();
+    double getY();
 
-    void setY(int y);
+    void setY(double y);
 
     String getEntityType();
 }

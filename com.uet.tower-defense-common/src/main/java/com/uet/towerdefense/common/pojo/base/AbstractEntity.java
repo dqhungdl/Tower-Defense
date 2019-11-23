@@ -4,9 +4,9 @@ public abstract class AbstractEntity<Tid extends Object> implements BaseEntity<T
 
     protected Tid id;
 
-    protected int x;
+    protected double x;
 
-    protected int y;
+    protected double y;
 
     protected String entityType;
 
@@ -21,22 +21,22 @@ public abstract class AbstractEntity<Tid extends Object> implements BaseEntity<T
     }
 
     @Override
-    public int getX() {
+    public double getX() {
         return x;
     }
 
     @Override
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
     @Override
-    public int getY() {
+    public double getY() {
         return y;
     }
 
     @Override
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 }

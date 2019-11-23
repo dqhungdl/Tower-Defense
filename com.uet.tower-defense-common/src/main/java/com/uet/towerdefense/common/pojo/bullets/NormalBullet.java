@@ -9,13 +9,14 @@ public class NormalBullet extends AbstractBullet {
 
     private static final String BULLET_IMAGE_ID = "295";
 
-    public NormalBullet(int x, int y, int direction, int damage, BaseEnemy targetEnemy) {
+    public NormalBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.damage = damage;
         this.speed = Bullets.NORMAL_SPEED;
         this.targetEnemy = targetEnemy;
+        init();
     }
 
     @Override

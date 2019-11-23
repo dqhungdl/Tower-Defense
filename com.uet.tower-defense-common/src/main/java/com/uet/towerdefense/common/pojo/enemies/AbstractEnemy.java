@@ -1,7 +1,6 @@
 package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.data.Coordinate;
-import com.uet.towerdefense.common.data.NodeCompare;
 import com.uet.towerdefense.common.data.Vector;
 import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
@@ -24,6 +23,8 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     protected int direction;
 
     protected Vector vector;
+
+    protected ImageView imageView;
 
     @Override
     public int getHp() {
@@ -86,22 +87,35 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public void render(List<NodeCompare> nodes) {
-        ImageView imageView = new ImageView(AssetUtil.getEnemyImage(getEnemyImageId()));
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    @Override
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    @Override
+    public void init() {
+        imageView = new ImageView(AssetUtil.getEnemyImage(getEnemyImageId()));
+        imageView.setId(RenderLevels.ENEMY);
+    }
+
+    @Override
+    public void render() {
         imageView.setX(y);
         imageView.setY(x);
         imageView.setRotate(this.direction);
-        imageView.setId(RenderLevels.ENEMY);
-        nodes.add(new NodeCompare(imageView));
     }
 
     @Override
     public void update(List<Coordinate> paths) {
         for (int i = paths.size() - 2; i >= 0; i--) {
-            int startX = paths.get(i).getX() * GamePlays.SPRITE_SIZE;
-            int startY = paths.get(i).getY() * GamePlays.SPRITE_SIZE;
-            int endX = paths.get(i + 1).getX() * GamePlays.SPRITE_SIZE;
-            int endY = paths.get(i + 1).getY() * GamePlays.SPRITE_SIZE;
+            double startX = paths.get(i).getX() * GamePlays.SPRITE_SIZE;
+            double startY = paths.get(i).getY() * GamePlays.SPRITE_SIZE;
+            double endX = paths.get(i + 1).getX() * GamePlays.SPRITE_SIZE;
+            double endY = paths.get(i + 1).getY() * GamePlays.SPRITE_SIZE;
             if (Math.min(startX, endX) <= x && x <= Math.max(startX, endX) && Math.min(startY, endY) <= y && y <= Math.max(startY, endY)) {
                 vector = new Vector((endX - startX == 0 ? 0 : endX > startX ? 1 : -1), (endY - startY == 0 ? 0 : endY > startY ? 1 : -1));
                 if (vector.equals(new Vector(0, 1)))
