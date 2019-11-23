@@ -1,10 +1,9 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.enums.Towers;
-import com.uet.towerdefense.common.enums.graphics.GamePlays;
-import com.uet.towerdefense.common.util.AssetUtil;
-import javafx.scene.Group;
-import javafx.scene.image.ImageView;
+import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
+import com.uet.towerdefense.common.pojo.bullets.NormalBullet;
+import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class NormalTower extends AbstractTower {
 
@@ -34,5 +33,10 @@ public class NormalTower extends AbstractTower {
     @Override
     public String getTowerImageId() {
         return TOWER_IMAGE_ID[level];
+    }
+
+    @Override
+    public void addBullet(BaseEnemy targetEnemy) {
+        bullets.add(new NormalBullet(x, y, direction, damage, targetEnemy));
     }
 }

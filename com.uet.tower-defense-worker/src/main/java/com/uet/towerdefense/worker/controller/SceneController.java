@@ -18,13 +18,13 @@ public class SceneController {
         this.stage = stage;
         this.stage.setTitle(GamePlays.TITLE);
         this.stage.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
-        this.stage.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
+        this.stage.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE + GamePlays.ADDED_HEIGHT);
         this.stage.setResizable(false);
         stage.show();
     }
 
     public void toGamePlayScene() {
-        gamePlayComponent.init(0);
+        gamePlayComponent.init(1);
         stage.setScene(gamePlayComponent.getScene());
     }
 }

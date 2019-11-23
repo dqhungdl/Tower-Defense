@@ -15,7 +15,7 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
 
     protected int hp;
 
-    protected int speed;
+    protected double speed;
 
     protected int defense;
 
@@ -36,12 +36,12 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -88,8 +88,8 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     @Override
     public void render(List<NodeCompare> nodes) {
         ImageView imageView = new ImageView(AssetUtil.getEnemyImage(getEnemyImageId()));
-        imageView.setX(y - GamePlays.SPRITE_SIZE / 2);
-        imageView.setY(x - GamePlays.SPRITE_SIZE / 2);
+        imageView.setX(y);
+        imageView.setY(x);
         imageView.setRotate(this.direction);
         imageView.setId(RenderLevels.ENEMY);
         nodes.add(new NodeCompare(imageView));

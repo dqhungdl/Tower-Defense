@@ -6,11 +6,13 @@ import com.uet.towerdefense.common.pojo.cells.TargetCell;
 public class Maps {
 
     public static final SpawnCell[] MAP_SPAWNS = new SpawnCell[]{
-            new SpawnCell(21, 30)
+            new SpawnCell(21, 30),
+            new SpawnCell(8, 11),
     };
 
     public static final TargetCell[] MAP_TARGETS = new TargetCell[]{
-            new TargetCell(-1, 3)
+            new TargetCell(-1, 3),
+            new TargetCell(-1, 1),
     };
 
     public static final int[][][] MAP_SPRITES = new int[][][]{
@@ -40,6 +42,18 @@ public class Maps {
                     {0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            }
+            },
+            {
+                    {0, 4, 0, 2, 2, 0, 0, 0, 0, 0, 2, 0},
+                    {0, 1, 0, 0, 2, 0, 1, 1, 1, 2, 2, 2},
+                    {0, 1, 0, 0, 0, 0, 1, 0, 1, 2, 0, 0},
+                    {0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {2, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0},
+                    {0, 1, 0, 1, 0, 0, 1, 1, 1, 2, 2, 0},
+                    {0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0},
+                    {0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 3},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            },
     };
 }

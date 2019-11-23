@@ -3,22 +3,22 @@ package com.uet.towerdefense.common.pojo.bullets;
 import com.uet.towerdefense.common.enums.Bullets;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
-public class NormalBullet extends AbstractBullet {
+public class MachineGunBullet extends AbstractBullet {
 
-    private static final String BULLET_IMAGE_ID = "295";
+    private static final String BULLET_IMAGE_ID = "272";
 
-    public NormalBullet(int x, int y, int direction, int damage, BaseEnemy targetEnemy) {
+    public MachineGunBullet(int x, int y, int direction, int damage, BaseEnemy targetEnemy) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.damage = damage;
-        this.speed = Bullets.NORMAL_SPEED;
+        this.speed = Bullets.MACHINE_GUN_SPEED;
         this.targetEnemy = targetEnemy;
     }
 
     @Override
     public String getBulletType() {
-        return Bullets.NORMAL;
+        return Bullets.MACHINE_GUN;
     }
 
     @Override

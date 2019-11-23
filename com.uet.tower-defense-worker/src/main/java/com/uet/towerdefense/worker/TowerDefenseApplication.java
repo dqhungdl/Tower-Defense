@@ -17,7 +17,6 @@ public class TowerDefenseApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
 
     public static void main(String[] args) {
-
         Application.launch(TowerDefenseApplication.class, args);
     }
 

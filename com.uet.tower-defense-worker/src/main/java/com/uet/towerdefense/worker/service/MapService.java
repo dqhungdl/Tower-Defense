@@ -61,18 +61,24 @@ public class MapService {
         enemies.add(enemy);
     }
 
-    public void addTower(BaseTower tower) {
-        Coordinate coordinate = new Coordinate(tower.getX() / GamePlays.SPRITE_SIZE, tower.getY() / GamePlays.SPRITE_SIZE);
-        if (coordinate.getX() < 0 || coordinate.getX() + 1 >= GamePlays.HEIGHT || coordinate.getY() < 0 || coordinate.getY() + 1 >= GamePlays.WIDTH)
-            return;
-        for (int i = 0; i <= 1; i++)
-            for (int j = 0; j <= 1; j++)
-                if (Maps.MAP_SPRITES[mapId][coordinate.getX() + i][coordinate.getY() + j] != Cells.GRASS)
-                    return;
-        for (BaseTower tempTower : towers)
-            if (Math.abs(tempTower.getX() - tower.getX()) <= GamePlays.SPRITE_SIZE && Math.abs(tempTower.getY() - tower.getY()) <= GamePlays.SPRITE_SIZE)
-                return;
+    public boolean addTower(BaseTower tower) {
+        for (int i = tower.getX(); i < tower.getX() + GamePlays.TOWER_SIZE; i++)
+            for (int j = tower.getY(); j < tower.getY() + GamePlays.TOWER_SIZE; j++) {
+                Coordinate coordinate = new Coordinate(i / GamePlays.SPRITE_SIZE, j / GamePlays.SPRITE_SIZE);
+                if (coordinate.getX() < 0 || coordinate.getX() >= GamePlays.HEIGHT || coordinate.getY() < 0 || coordinate.getY() >= GamePlays.WIDTH
+                        || Maps.MAP_SPRITES[mapId][coordinate.getX()][coordinate.getY()] != Cells.GRASS)
+                    return false;
+            }
+        for (BaseTower tempTower : towers) {
+            int xMin = Math.max(tower.getX(), tempTower.getX());
+            int yMin = Math.max(tower.getY(), tempTower.getY());
+            int xMax = Math.min(tower.getX(), tempTower.getX());
+            int yMax = Math.min(tower.getY(), tempTower.getY());
+            if (xMin < xMax && yMin < yMax)
+                return false;
+        }
         towers.add(tower);
+        return true;
     }
 
     public void render() {

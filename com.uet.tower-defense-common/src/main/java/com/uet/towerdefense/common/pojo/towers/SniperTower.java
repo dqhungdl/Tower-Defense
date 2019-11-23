@@ -1,7 +1,7 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.enums.Towers;
-import javafx.scene.Group;
+import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class SniperTower extends AbstractTower {
 
@@ -18,5 +18,10 @@ public class SniperTower extends AbstractTower {
     @Override
     public String getTowerImageId() {
         return null;
+    }
+
+    @Override
+    public void addBullet(BaseEnemy enemy) {
+
     }
 }

@@ -48,7 +48,6 @@ public class GamePlayScene {
         this.group = new Group();
         this.scene = new Scene(group);
         mapService.init(nodes, mapId);
-        mapService.addTower(new NormalTower(6 * GamePlays.SPRITE_SIZE, 19 * GamePlays.SPRITE_SIZE));
         menuService.init(group, nodes);
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastAddEnemies = 0;
@@ -70,8 +69,7 @@ public class GamePlayScene {
         for (int i = 0; i < group.getChildren().size(); i++) {
             if (group.getChildren().get(i).getId().equals(RenderLevels.MAP)
                     || group.getChildren().get(i).getId().equals(RenderLevels.DRAG_DROP)
-                    || group.getChildren().get(i).getId().equals(RenderLevels.DRAG_DROP_STAND)
-                    || group.getChildren().get(i).getId().equals(RenderLevels.DRAG_DROP_TOWER))
+                    || group.getChildren().get(i).getId().equals(RenderLevels.TEMP_DRAG_DROP))
                 continue;
             group.getChildren().remove(i--);
         }

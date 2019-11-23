@@ -13,9 +13,9 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setHp(int hp);
 
-    int getSpeed();
+    double getSpeed();
 
-    void setSpeed(int speed);
+    void setSpeed(double speed);
 
     int getDefense();
 

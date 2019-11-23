@@ -12,9 +12,9 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     List<BaseBullet> bullets = new ArrayList<>();
 
-    int getSpeed();
+    double getSpeed();
 
-    void setSpeed(int speed);
+    void setSpeed(double speed);
 
     int getRange();
 
@@ -51,6 +51,8 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
     List<BaseBullet> getBullets();
 
     void setBullets(List<BaseBullet> bullets);
+
+    void addBullet(BaseEnemy enemy);
 
     void render(List<NodeCompare> nodes);
 

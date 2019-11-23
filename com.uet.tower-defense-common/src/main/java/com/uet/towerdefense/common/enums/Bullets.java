@@ -2,8 +2,8 @@ package com.uet.towerdefense.common.enums;
 
 public class Bullets {
     public static final String NORMAL = "Normal";
+    public static final String MACHINE_GUN = "Machine Gun";
 
-    public static final double SPEED = 15.0;
-    public static final double ACCELERATION = 2.0;
-    public static final double ACCEPTED_RANGE = 0.1;
+    public static final double NORMAL_SPEED = 10.0;
+    public static final double MACHINE_GUN_SPEED = 20.0;
 }

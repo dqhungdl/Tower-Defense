@@ -9,7 +9,6 @@ import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.bullets.NormalBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.util.AssetUtil;
-import com.uet.towerdefense.common.util.CompareUtil;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public abstract class AbstractTower extends AbstractStaticEntity<Long> implements BaseTower<Long> {
 
-    protected int speed;
+    protected double speed;
 
     protected int range;
 
@@ -34,12 +33,12 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     protected List<BaseBullet> bullets = new ArrayList<>();
 
     @Override
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -142,7 +141,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         int minDistance = 1000000000;
         BaseEnemy targetEnemy = null;
         for (BaseEnemy enemy : enemies) {
-            int distance = (int) Math.sqrt(Math.pow(enemy.getX() - towerX, 2) + Math.pow(enemy.getY() - towerY, 2));
+            int distance = (int) Math.sqrt(Math.pow(enemy.getX() + GamePlays.ENEMY_SIZE / 2 - towerX, 2) + Math.pow(enemy.getY() + GamePlays.ENEMY_SIZE / 2 - towerY, 2));
             if (minDistance > distance) {
                 minDistance = distance;
                 targetEnemy = enemy;
@@ -150,7 +149,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         }
         if (minDistance <= range && currentTimestamp - lastFireTimestamp >= GamePlays.SECOND_TO_NANO * speed) {
             Vector v1 = new Vector(0, 1);
-            Vector v2 = new Vector(targetEnemy.getX() - towerX, targetEnemy.getY() - towerY);
+            Vector v2 = new Vector(targetEnemy.getX() + GamePlays.SPRITE_SIZE / 2 - towerX, targetEnemy.getY() + GamePlays.SPRITE_SIZE / 2 - towerY);
             double distance1 = Math.sqrt(Math.pow(v1.getDx(), 2) + Math.pow(v1.getDy(), 2));
             double distance2 = Math.sqrt(Math.pow(v2.getDx(), 2) + Math.pow(v2.getDy(), 2));
             double angle = Math.toDegrees(Math.acos((double) (v1.getDx() * v2.getDy() + v1.getDy() * v2.getDx()) / (distance1 * distance2)));
@@ -159,7 +158,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             angle += 180.0;
             direction = (int) angle % 360;
             lastFireTimestamp = currentTimestamp;
-            bullets.add(new NormalBullet(x, y, 0, damage, targetEnemy));
+            addBullet(targetEnemy);
+//            bullets.add(new NormalBullet(x, y, direction, damage, targetEnemy));
         }
     }
 }
