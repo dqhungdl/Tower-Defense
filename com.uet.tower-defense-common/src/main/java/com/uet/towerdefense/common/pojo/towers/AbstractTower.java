@@ -24,7 +24,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected int damage;
 
-    protected int gold;
+    protected int money;
 
     protected int level = 0;
 
@@ -38,9 +38,9 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected ImageView imageViewTower;
 
-    protected Double opacity = Animations.NORMAL_OPACITY;
-
     protected Circle rangeCircle;
+
+    protected Double opacity = Animations.NORMAL_OPACITY;
 
     @Override
     public double getSpeed() {
@@ -73,13 +73,13 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
-    public int getGold() {
-        return gold;
+    public int getMoney() {
+        return money;
     }
 
     @Override
-    public void setGold(int gold) {
-        this.gold = gold;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     @Override
@@ -179,14 +179,15 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             }
     }
 
-    @Override
-    public void init(List<Node> nodes) {
+    public AbstractTower(double x, double y, List<Node> nodes) {
+        this.x = x;
+        this.y = y;
+        this.direction = 0;
         imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
         imageViewStand.setId(RenderLevels.TOWER_STAND);
         rangeCircle = new Circle();
         rangeCircle.setCenterX(y + GamePlays.TOWER_SIZE / 2);
         rangeCircle.setCenterY(x + GamePlays.TOWER_SIZE / 2);
-        rangeCircle.setRadius(range);
         rangeCircle.setFill(Color.BLUE);
         rangeCircle.setOpacity(Animations.LIGHT_OPACITY);
         rangeCircle.setId(RenderLevels.ANIMATION);
@@ -212,6 +213,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     @Override
     public void render() {
+        rangeCircle.setRadius(range);
         imageViewStand.setX(y);
         imageViewStand.setY(x);
         imageViewStand.setOpacity(opacity);
@@ -234,7 +236,7 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
                 targetEnemy = enemy;
             }
         }
-        if (minDistance <= range && currentTimestamp - lastFireTimestamp >= GamePlays.SECOND_TO_NANO * speed) {
+        if (minDistance <= range && currentTimestamp - lastFireTimestamp >= GamePlays.SECOND_TO_MILLI * speed) {
             Vector v1 = new Vector(0, 1);
             Vector v2 = new Vector(targetEnemy.getX() + GamePlays.SPRITE_SIZE / 2 - towerX, targetEnemy.getY() + GamePlays.SPRITE_SIZE / 2 - towerY);
             double distance1 = Math.sqrt(Math.pow(v1.getDx(), 2) + Math.pow(v1.getDy(), 2));

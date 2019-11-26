@@ -14,7 +14,7 @@ public class GamePlays {
     public static final int ENEMY_SIZE = SPRITE_SIZE;
     public static final int BULLET_SIZE = SPRITE_SIZE;
 
-    public static final long SECOND_TO_NANO = 1000000000L;
-    public static final long SECOND_START_GAME = 10 * SECOND_TO_NANO;
-    public static final long SECOND_BETWEEN_STAGES = 5 * SECOND_TO_NANO;
+    public static final long SECOND_TO_MILLI = 1000L;
+    public static final long SECOND_START_GAME = 10 * SECOND_TO_MILLI;
+    public static final long SECOND_BETWEEN_STAGES = 5 * SECOND_TO_MILLI;
 }

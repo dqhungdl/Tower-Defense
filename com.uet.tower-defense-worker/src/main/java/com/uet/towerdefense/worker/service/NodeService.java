@@ -1,5 +1,6 @@
 package com.uet.towerdefense.worker.service;
 
+import com.uet.towerdefense.common.enums.RenderLevels;
 import javafx.scene.Node;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +37,5 @@ public class NodeService {
                 nodes.remove(node);
                 break;
             }
-    }
-
-    public void remove(String renderId) {
-        for (int i = 0; i < nodes.size(); i++)
-            if (nodes.get(i).getId().equals(renderId))
-                nodes.remove(i--);
     }
 }

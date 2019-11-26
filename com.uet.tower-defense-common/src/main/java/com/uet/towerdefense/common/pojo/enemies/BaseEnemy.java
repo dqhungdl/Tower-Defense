@@ -21,9 +21,9 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setDefense(int defense);
 
-    int getGold();
+    int getMoney();
 
-    void setGold(int gold);
+    void setMoney(int money);
 
     int getDirection();
 
@@ -36,8 +36,6 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
     ImageView getImageView();
 
     void setImageView(ImageView imageView);
-
-    void init();
 
     String getEnemyType();
 

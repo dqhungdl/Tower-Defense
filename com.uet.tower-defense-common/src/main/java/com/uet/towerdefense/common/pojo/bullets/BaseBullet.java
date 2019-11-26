@@ -30,8 +30,6 @@ public interface BaseBullet<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     String getBulletImageId();
 
-    void init();
-
     void render();
 
     void update();

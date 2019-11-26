@@ -8,5 +8,6 @@ public class RenderLevels {
     public static final String TOWER_STAND = "4";
     public static final String TOWER = "5";
     public static final String ENEMY = "6";
-    public static final String DRAG_DROP = "7";
+    public static final String TEXT = "8";
+    public static final String DRAG_DROP = "9";
 }

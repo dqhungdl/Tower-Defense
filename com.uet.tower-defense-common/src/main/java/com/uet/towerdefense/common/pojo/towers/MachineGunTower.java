@@ -12,15 +12,12 @@ public class MachineGunTower extends AbstractTower {
     private static final String STAND_IMAGE_ID = "182";
     private static final String[] TOWER_IMAGE_ID = new String[]{"203", "203"};
 
-    public MachineGunTower(int x, int y, List<Node> nodes) {
-        this.x = x;
-        this.y = y;
-        this.direction = 0;
+    public MachineGunTower(double x, double y, List<Node> nodes) {
+        super(x,y,nodes);
         speed = Towers.MACHINE_GUN_SPEED[level];
         range = Towers.MACHINE_GUN_RANGE[level];
         damage = Towers.MACHINE_GUN_DAMAGE[level];
-        gold = Towers.MACHINE_GUN_GOLD[level];
-        init(nodes);
+        money = Towers.MACHINE_GUN_MONEY[level];
     }
 
     @Override

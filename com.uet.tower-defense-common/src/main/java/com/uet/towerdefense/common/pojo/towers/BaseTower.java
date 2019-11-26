@@ -26,9 +26,9 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void setDamage(int damage);
 
-    int getGold();
+    int getMoney();
 
-    void setGold(int gold);
+    void setMoney(int money);
 
     int getLevel();
 
@@ -67,8 +67,6 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
     Circle getRangeCircle();
 
     void setRangeCircle(Circle circle);
-
-    void init(List<Node> nodes);
 
     void render();
 

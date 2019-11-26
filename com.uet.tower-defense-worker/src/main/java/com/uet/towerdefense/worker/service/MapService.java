@@ -3,6 +3,7 @@ package com.uet.towerdefense.worker.service;
 import com.uet.towerdefense.common.data.Coordinate;
 import com.uet.towerdefense.common.enums.Cells;
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.enums.graphics.Directions;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
@@ -22,6 +23,9 @@ public class MapService {
 
     @Autowired
     private NodeService nodeService;
+
+    @Autowired
+    private MenuService menuService;
 
     private int mapId;
     private List<BaseEnemy> enemies = new ArrayList<>();
@@ -81,6 +85,40 @@ public class MapService {
         return true;
     }
 
+    public void buyTower(BaseTower tower) {
+        if (!menuService.addMoney(-tower.getMoney()))
+            return;
+        double x = tower.getX(), y = tower.getY();
+        for (int distance = 0; distance <= Towers.ACCEPTABLE_PLACED_RANGE; distance++) {
+            for (int i = (int) x - distance; i <= x + distance; i++) {
+                tower.setX(i);
+                tower.setY(y - (distance - Math.abs(i - x)));
+                if (addTower(tower))
+                    return;
+                tower.setX(i);
+                tower.setY(y + (distance - Math.abs(i - x)));
+                if (addTower(tower))
+                    return;
+            }
+        }
+        menuService.addMoney(tower.getMoney());
+    }
+
+    public void sellTower(BaseTower tower) {
+        menuService.addMoney(tower.getMoney());
+        nodeService.remove(tower.getImageViewStand());
+        nodeService.remove(tower.getImageViewTower());
+    }
+
+    public void killEnemy(BaseEnemy enemy) {
+        menuService.addMoney(enemy.getMoney());
+    }
+
+    public void attackBase(BaseEnemy enemy) {
+        if (!menuService.subHp(enemy.getHp()))
+            System.exit(0);
+    }
+
     public void render() {
         for (BaseTower tower : towers) {
             List<BaseBullet> bullets = tower.getBullets();
@@ -124,6 +162,10 @@ public class MapService {
             if ((enemies.get(i).getX() == paths.get(paths.size() - 1).getX() * GamePlays.SPRITE_SIZE
                     && enemies.get(i).getY() == paths.get(paths.size() - 1).getY() * GamePlays.SPRITE_SIZE)
                     || enemies.get(i).getHp() <= 0) {
+                if (enemies.get(i).getHp() <= 0)
+                    killEnemy(enemies.get(i));
+                else
+                    attackBase(enemies.get(i));
                 nodeService.remove(enemies.get(i).getImageView());
                 enemies.remove(i--);
             }

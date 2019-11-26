@@ -67,8 +67,12 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
         this.imageView = imageView;
     }
 
-    @Override
-    public void init() {
+    public AbstractBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+        this.damage = damage;
+        this.targetEnemy = targetEnemy;
         imageView = new ImageView(AssetUtil.getBulletImage(getBulletImageId()));
         imageView.setId(RenderLevels.BULLET);
     }

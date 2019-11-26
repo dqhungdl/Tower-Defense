@@ -4,13 +4,19 @@ import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
+import com.uet.towerdefense.common.pojo.GameStage;
+import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
 import com.uet.towerdefense.common.pojo.towers.MachineGunTower;
-import com.uet.towerdefense.common.pojo.towers.NormalTower;
+import com.uet.towerdefense.common.pojo.towers.SniperTower;
+import com.uet.towerdefense.common.pojo.towers.RocketTower;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +28,44 @@ public class MenuService {
 
     @Autowired
     private MapService mapService;
+
+    private GameStage gameStage;
+
+    private Text textMoney, textHp;
+
+    public void init(GameStage gameStage) {
+        this.gameStage = gameStage;
+        ImageView imageViewMenu = new ImageView(AssetUtil.getBackgroundImage("1"));
+        imageViewMenu.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
+        imageViewMenu.setId(RenderLevels.MENU);
+        nodeService.add(imageViewMenu);
+        // Add hp and money
+        textMoney = new Text();
+        textMoney.setText(String.valueOf(gameStage.getMoney()));
+        textMoney.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 50);
+        textMoney.setY(35);
+        textMoney.setFont(Font.font("Courier New", FontWeight.BOLD, 30));
+        textMoney.setFill(Color.WHITE);
+        textMoney.setId(RenderLevels.TEXT);
+        textHp = new Text();
+        textHp.setText(String.valueOf(gameStage.getHp()));
+        textHp.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 50);
+        textHp.setY(72);
+        textHp.setFont(Font.font("Courier New", FontWeight.BOLD, 30));
+        textHp.setFill(Color.WHITE);
+        textHp.setId(RenderLevels.TEXT);
+        nodeService.add(textMoney);
+        nodeService.add(textHp);
+        // Item's frame and tower's drag-drop
+        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110);
+        createTowerImage(new SniperTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113, nodeService.getNodes()));
+        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110);
+        createTowerImage(new MachineGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113, nodeService.getNodes()));
+        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110 + GamePlays.SPRITE_SIZE + 20);
+        createTowerImage(new RocketTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110 + GamePlays.SPRITE_SIZE + 20);
+        createTowerImage(new SniperTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+    }
 
     private void deleteDragDropItem() {
     }
@@ -61,31 +105,13 @@ public class MenuService {
             int x = (int) mouseEvent.getY() - GamePlays.TOWER_SIZE / 2;
             int y = (int) mouseEvent.getX() - GamePlays.TOWER_SIZE / 2;
             BaseTower addedTower = null;
-            if (tower instanceof NormalTower)
-                addedTower = new NormalTower(x, y, nodeService.getNodes());
+            if (tower instanceof SniperTower)
+                addedTower = new SniperTower(x, y, nodeService.getNodes());
             if (tower instanceof MachineGunTower)
                 addedTower = new MachineGunTower(x, y, nodeService.getNodes());
-            if (!mapService.addTower(addedTower)) {
-                boolean isAdded = false;
-                for (int distance = 1; distance <= Towers.ACCEPTABLE_PLACED_RANGE; distance++) {
-                    if (isAdded)
-                        break;
-                    for (int i = x - distance; i <= x + distance; i++) {
-                        addedTower.setX(i);
-                        addedTower.setY(y - (distance - Math.abs(i - x)));
-                        if (mapService.addTower(addedTower)) {
-                            isAdded = true;
-                            break;
-                        }
-                        addedTower.setX(i);
-                        addedTower.setY(y + (distance - Math.abs(i - x)));
-                        if (mapService.addTower(addedTower)) {
-                            isAdded = true;
-                            break;
-                        }
-                    }
-                }
-            }
+            if (tower instanceof RocketTower)
+                addedTower = new RocketTower(x, y, nodeService.getNodes());
+            mapService.buyTower(addedTower);
             nodeService.remove(tempImageViewStand);
             nodeService.remove(tempImageViewTower);
             nodeService.remove(rangeCircle);
@@ -105,23 +131,22 @@ public class MenuService {
         nodeService.add(imageViewFrame);
     }
 
-    public void init() {
-        // Menu
-        ImageView imageViewMenu = new ImageView(AssetUtil.getBackgroundImage("1"));
-        imageViewMenu.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
-        imageViewMenu.setId(RenderLevels.MENU);
-        nodeService.add(imageViewMenu);
-        // Item's frame and tower's drag-drop
-        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110);
-        createTowerImage(new NormalTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113, nodeService.getNodes()));
-        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110);
-        createTowerImage(new MachineGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113, nodeService.getNodes()));
-        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110 + GamePlays.SPRITE_SIZE + 20);
-        createTowerImage(new NormalTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
-        createTowerFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110 + GamePlays.SPRITE_SIZE + 20);
-        createTowerImage(new NormalTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+    public boolean addMoney(int money) {
+        if (gameStage.getMoney() + money < 0)
+            return false;
+        gameStage.setMoney(gameStage.getMoney() + money);
+        return true;
+    }
+
+    public boolean subHp(int hp) {
+        if (gameStage.getHp() < hp)
+            return false;
+        gameStage.setHp(gameStage.getHp() - hp);
+        return true;
     }
 
     public void render() {
+        textMoney.setText(String.valueOf(gameStage.getMoney()));
+        textHp.setText(String.valueOf(gameStage.getHp()));
     }
 }

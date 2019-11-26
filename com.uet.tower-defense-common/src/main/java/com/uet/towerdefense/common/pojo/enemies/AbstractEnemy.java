@@ -18,9 +18,11 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
 
     protected int defense;
 
-    protected int gold;
+    protected int money;
 
     protected int direction;
+
+    protected int level;
 
     protected Vector vector;
 
@@ -57,13 +59,13 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public int getGold() {
-        return gold;
+    public int getMoney() {
+        return money;
     }
 
     @Override
-    public void setGold(int gold) {
-        this.gold = gold;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     @Override
@@ -96,8 +98,8 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
         this.imageView = imageView;
     }
 
-    @Override
-    public void init() {
+    public AbstractEnemy(int level) {
+        this.level = level;
         imageView = new ImageView(AssetUtil.getEnemyImage(getEnemyImageId()));
         imageView.setId(RenderLevels.ENEMY);
     }

@@ -1,11 +1,11 @@
 package com.uet.towerdefense.common.pojo;
 
-public class Stage {
+public class GameStage {
 
     private int hp;
     private int money;
 
-    public Stage(int hp, int money) {
+    public GameStage(int hp, int money) {
         this.hp = hp;
         this.money = money;
     }
