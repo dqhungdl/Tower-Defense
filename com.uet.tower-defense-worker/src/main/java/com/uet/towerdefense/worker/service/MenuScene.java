@@ -1,6 +1,7 @@
 package com.uet.towerdefense.worker.service;
 
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
@@ -39,22 +40,57 @@ public class MenuScene {
     {
         this.group = new Group();
         this.scene = new Scene(group);
-        ImageView imageView = new ImageView(AssetUtil.getMenuSence());
-        imageView.setId(RenderLevels.MENU_SCENE);
-        group.getChildren().add(imageView);
+        ImageView menuView = new ImageView(AssetUtil.getMenuSence());
+        group.getChildren().add(menuView);
 
-
-        imageView.setOnMouseClicked(mouseEvent -> {
-            double x = mouseEvent.getX();
-            double y = mouseEvent.getY();
-
-            if (x>475 && x<725 && y>260 && y<335)
-                sceneController.toGamePlayScene();
-            else if (x>475 && x<725 && y>384 && y<460)
-                System.out.println("Resume");
-            else if (x>475 && x<725 && y>510 && y<586)
-                System.exit(0);
+        ImageView newGame = new ImageView(AssetUtil.getButtonImage("9", GamePlays.BUTTON_WIDTH, GamePlays.BUTTON_HEIGHT));
+        newGame.setX(475);
+        newGame.setY(260);
+        group.getChildren().add(newGame);
+        newGame.setOnMouseEntered(mouseEvent -> {
+            newGame.setOpacity(Animations.DARK_OPACITY);
         });
+
+        newGame.setOnMouseExited(mouseEvent -> {
+            newGame.setOpacity(Animations.NORMAL_OPACITY);
+        });
+
+        newGame.setOnMouseClicked(mouseEvent ->{
+            sceneController.toGamePlayScene();
+        } );
+
+
+        ImageView resume = new ImageView(AssetUtil.getButtonImage("10", GamePlays.BUTTON_WIDTH, GamePlays.BUTTON_HEIGHT));
+        resume.setX(475);
+        resume.setY(375);
+        group.getChildren().add(resume);
+        resume.setOnMouseEntered(mouseEvent -> {
+            resume.setOpacity(Animations.DARK_OPACITY);
+        });
+
+        resume.setOnMouseExited(mouseEvent -> {
+            resume.setOpacity(Animations.NORMAL_OPACITY);
+        });
+
+        resume.setOnMouseClicked(mouseEvent ->{
+            sceneController.toGamePlayScene();
+        } );
+
+        ImageView exit = new ImageView(AssetUtil.getButtonImage("8", GamePlays.BUTTON_WIDTH, GamePlays.BUTTON_HEIGHT));
+        exit.setX(475);
+        exit.setY(490);
+        group.getChildren().add(exit);
+        exit.setOnMouseEntered(mouseEvent -> {
+            exit.setOpacity(Animations.DARK_OPACITY);
+        });
+
+        exit.setOnMouseExited(mouseEvent -> {
+            exit.setOpacity(Animations.NORMAL_OPACITY);
+        });
+
+        exit.setOnMouseClicked(mouseEvent ->{
+            System.exit(0);
+        } );
 
     }
 
