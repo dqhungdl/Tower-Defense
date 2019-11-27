@@ -182,16 +182,16 @@ public class MapService {
     }
 
     public void attackBase(BaseEnemy enemy) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
-        rectangle.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
-        rectangle.setOpacity(Animations.LIGHT_OPACITY);
-        rectangle.setId(RenderLevels.COVER);
-        rectangle.setOnMouseClicked(mouseEvent -> {
-            sceneController.toMenuScene();
-        });
-        nodeService.add(rectangle);
         if (!menuService.subHp(enemy.getHp())) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
+            rectangle.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
+            rectangle.setOpacity(Animations.LIGHT_OPACITY);
+            rectangle.setId(RenderLevels.COVER);
+            rectangle.setOnMouseClicked(mouseEvent -> {
+                sceneController.toMenuScene();
+            });
+            nodeService.add(rectangle);
             notificationService.setNotification("\n  Defeat\nGo to Menu ...");
             gamePlayScene.getTimeline().stop();
         }
