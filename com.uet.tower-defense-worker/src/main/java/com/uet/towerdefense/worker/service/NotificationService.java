@@ -20,7 +20,7 @@ public class NotificationService {
     private Text notification;
 
     public void init() {
-        ImageView imageView = new ImageView(AssetUtil.getButtonImage("2", GamePlays.ADDED_WIDTH, 170));
+        ImageView imageView = new ImageView(AssetUtil.getButtonImage("6", GamePlays.ADDED_WIDTH, 170));
         imageView.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
         imageView.setY(330);
         imageView.setId(RenderLevels.MENU);
