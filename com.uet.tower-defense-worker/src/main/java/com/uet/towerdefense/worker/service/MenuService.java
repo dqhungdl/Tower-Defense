@@ -6,10 +6,7 @@ import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.GameStage;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
-import com.uet.towerdefense.common.pojo.towers.BaseTower;
-import com.uet.towerdefense.common.pojo.towers.MachineGunTower;
-import com.uet.towerdefense.common.pojo.towers.SniperTower;
-import com.uet.towerdefense.common.pojo.towers.RocketTower;
+import com.uet.towerdefense.common.pojo.towers.*;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -88,7 +85,7 @@ public class MenuService {
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110 + GamePlays.SPRITE_SIZE + 20);
         createTowerImage(new RocketTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110 + GamePlays.SPRITE_SIZE + 20);
-        createTowerImage(new SniperTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+        createTowerImage(new AirGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 525);
         createUpdateButtonImage(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 525);
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 525);
@@ -132,6 +129,8 @@ public class MenuService {
                 addedTower = new MachineGunTower(x, y, nodeService.getNodes());
             if (tower instanceof RocketTower)
                 addedTower = new RocketTower(x, y, nodeService.getNodes());
+            if (tower instanceof AirGunTower)
+                addedTower = new AirGunTower(x, y, nodeService.getNodes());
             mapService.buyTower(addedTower);
             nodeService.remove(tempImageViewStand);
             nodeService.remove(tempImageViewTower);

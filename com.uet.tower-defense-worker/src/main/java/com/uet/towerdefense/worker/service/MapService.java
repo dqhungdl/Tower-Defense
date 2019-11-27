@@ -1,9 +1,7 @@
 package com.uet.towerdefense.worker.service;
 
 import com.uet.towerdefense.common.data.Coordinate;
-import com.uet.towerdefense.common.enums.Cells;
-import com.uet.towerdefense.common.enums.RenderLevels;
-import com.uet.towerdefense.common.enums.Towers;
+import com.uet.towerdefense.common.enums.*;
 import com.uet.towerdefense.common.enums.graphics.Directions;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
@@ -165,7 +163,14 @@ public class MapService {
             for (int i = 0; i < bullets.size(); i++) {
                 if (bullets.get(i).getX() == bullets.get(i).getTargetEnemy().getX()
                         && bullets.get(i).getY() == bullets.get(i).getTargetEnemy().getY()) {
-                    bullets.get(i).getTargetEnemy().setHp(bullets.get(i).getTargetEnemy().getHp() - bullets.get(i).getDamage());
+                    if (bullets.get(i).getBulletType().equals(Bullets.ROCKET))
+                        for (BaseEnemy enemy : enemies) {
+                            double distance = Math.sqrt(Math.pow(enemy.getX() - bullets.get(i).getX(), 2) + Math.pow(enemy.getY() - bullets.get(i).getY(), 2));
+                            if (!enemy.getEnemyType().equals(Enemies.PLANE) && distance <= Bullets.ROCKET_EXPLOSION_RANGE)
+                                enemy.setHp(enemy.getHp() - bullets.get(i).getDamage());
+                        }
+                    else
+                        bullets.get(i).getTargetEnemy().setHp(bullets.get(i).getTargetEnemy().getHp() - bullets.get(i).getDamage());
                     nodeService.remove(bullets.get(i).getImageView());
                     bullets.remove(i--);
                 }

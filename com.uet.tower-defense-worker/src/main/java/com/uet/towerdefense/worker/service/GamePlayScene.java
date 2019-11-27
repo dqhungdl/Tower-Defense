@@ -108,7 +108,7 @@ public class GamePlayScene {
                 }
                 update();
                 if (enemies.size() > 0 && timestamp >= nextTimestamp) {
-                    nextTimestamp = timestamp + GamePlays.SECOND_TO_MILLI;
+                    nextTimestamp = timestamp + GamePlays.SECOND_TO_MILLI / 2;
                     mapService.addEnemy(enemies.pollFirst());
                 }
             }

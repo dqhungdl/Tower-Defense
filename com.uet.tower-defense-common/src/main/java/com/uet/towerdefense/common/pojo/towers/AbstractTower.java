@@ -1,7 +1,9 @@
 package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.data.Vector;
+import com.uet.towerdefense.common.enums.Enemies;
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.base.AbstractStaticEntity;
@@ -238,6 +240,9 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         BaseEnemy targetEnemy = null;
         for (BaseEnemy enemy : enemies) {
             if (isCoincideTargetEnemy(towers, enemy))
+                continue;
+            if ((!getTowerType().equals(Towers.AIR_GUN) && enemy.getEnemyType().equals(Enemies.PLANE))
+                    || (getTowerType().equals(Towers.AIR_GUN) && !enemy.getEnemyType().equals(Enemies.PLANE)))
                 continue;
             int distance = (int) Math.sqrt(Math.pow(enemy.getX() + GamePlays.ENEMY_SIZE / 2 - towerX, 2) + Math.pow(enemy.getY() + GamePlays.ENEMY_SIZE / 2 - towerY, 2));
             if (minDistance > distance) {
