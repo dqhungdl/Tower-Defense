@@ -10,6 +10,9 @@ public class GamePlays {
     public static final int ADDED_HEIGHT = 29;
     public static final int ADDED_WIDTH = 2 * SPRITE_SIZE + 50;
 
+    public static final  int BUTTON_HEIGHT = 75;
+    public static final  int BUTTON_WIDTH = 250;
+
     public static final int TOWER_SIZE = SPRITE_SIZE;
     public static final int ENEMY_SIZE = SPRITE_SIZE;
     public static final int BULLET_SIZE = SPRITE_SIZE;
