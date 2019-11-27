@@ -183,8 +183,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             content += "Rocket\n";
         if (getTowerType().equals(Towers.AIR_GUN))
             content += "Air Gun";
-        content += "Speed: " + speed + "";
-        content += "Range: " + range + "\n";
+        content += "Speed : " + speed + "\n";
+        content += "Range : " + range + "\n";
         content += "Damage: " + damage + "\n";
         return content;
     }

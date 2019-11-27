@@ -2,6 +2,7 @@ package com.uet.towerdefense.common.util;
 
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -49,8 +50,13 @@ public class AssetUtil {
     }
 
     public static MediaPlayer getBackgroundSound() {
-        String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/Sound/background.mp3").toExternalForm();
+        String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/Sound/background.mp3").getPath();
         Media media = new Media(new File(fileName).toURI().toString());
         return new MediaPlayer(media);
+    }
+
+    public static AudioClip getGameSound(String soundName) {
+        String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/Sound/" + soundName + ".wav").toExternalForm();
+        return new AudioClip(fileName);
     }
 }

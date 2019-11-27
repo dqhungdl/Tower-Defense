@@ -150,6 +150,14 @@ public class MenuService {
         rangeCircle.setFill(Color.BLUE);
         rangeCircle.setOpacity(Animations.LIGHT_OPACITY);
         rangeCircle.setId(RenderLevels.ANIMATION);
+        imageViewTower.setOnMouseEntered(mouseEvent -> {
+            imageViewStand.setOpacity(Animations.DARK_OPACITY);
+            imageViewTower.setOpacity(Animations.DARK_OPACITY);
+        });
+        imageViewTower.setOnMouseExited(mouseEvent -> {
+            imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
+            imageViewTower.setOpacity(Animations.DARK_OPACITY);
+        });
         imageViewTower.setOnMouseDragged(mouseEvent -> {
             tempImageViewStand.setX(mouseEvent.getX() - GamePlays.TOWER_SIZE / 2);
             tempImageViewStand.setY(mouseEvent.getY() - GamePlays.TOWER_SIZE / 2);

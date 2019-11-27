@@ -4,6 +4,7 @@ import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.util.AssetUtil;
 import com.uet.towerdefense.worker.scene.GamePlayScene;
 import com.uet.towerdefense.worker.scene.MenuScene;
+import com.uet.towerdefense.worker.service.SoundService;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,6 +23,9 @@ public class SceneController {
     @Autowired
     private MenuScene menuScene;
 
+    @Autowired
+    private SoundService soundService;
+
     private Stage stage;
 
     public void setScene(Stage stage) {
@@ -30,8 +34,7 @@ public class SceneController {
         this.stage.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
         this.stage.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE + GamePlays.ADDED_HEIGHT);
         this.stage.setResizable(false);
-        MediaPlayer mediaPlayer = AssetUtil.getBackgroundSound();
-        mediaPlayer.setAutoPlay(true);
+        soundService.init();
         stage.show();
     }
 
@@ -39,7 +42,6 @@ public class SceneController {
         gamePlayScene.init(1);
         stage.setScene(gamePlayScene.getScene());
     }
-
 
     public void toMenuScene() {
         menuScene.init();

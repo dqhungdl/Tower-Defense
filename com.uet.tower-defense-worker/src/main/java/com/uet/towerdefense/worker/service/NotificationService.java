@@ -34,12 +34,11 @@ public class NotificationService {
         imageView.setId(RenderLevels.MENU);
         nodeService.add(imageView);
         notification = new Text();
-        notification.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE+15);
+        notification.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 15);
         notification.setY(380);
         notification.setFill(Color.BLACK);
         notification.setId(RenderLevels.TEXT);
-        notification.setFont(Font.font(GamePlays.FONT, FontWeight.BOLD, 25));
-        notification.setLineSpacing(GamePlays.ADDED_WIDTH);
+        notification.setFont(Font.font(GamePlays.FONT, FontWeight.BOLD, 20));
         nodeService.add(notification);
     }
 

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +25,9 @@ public class MapService {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private SoundService soundService;
 
     private int mapId;
     private List<BaseEnemy> enemies = new ArrayList<>();
@@ -161,6 +165,8 @@ public class MapService {
                 nodeService.add(bullet.getImageView());
             }
             tower.update(enemies, towers, latestTimestamp);
+            if (tower.getLastFireTimestamp() == latestTimestamp)
+                soundService.soundProduce("shoot");
             nodeService.add(tower.getImageViewStand());
             nodeService.add(tower.getImageViewTower());
         }
@@ -187,9 +193,10 @@ public class MapService {
             if ((enemies.get(i).getX() == paths.get(paths.size() - 1).getX() * GamePlays.SPRITE_SIZE
                     && enemies.get(i).getY() == paths.get(paths.size() - 1).getY() * GamePlays.SPRITE_SIZE)
                     || enemies.get(i).getHp() <= 0) {
-                if (enemies.get(i).getHp() <= 0)
+                if (enemies.get(i).getHp() <= 0) {
                     killEnemy(enemies.get(i));
-                else
+                    soundService.soundProduce("kill");
+                } else
                     attackBase(enemies.get(i));
                 nodeService.remove(enemies.get(i).getImageView());
                 enemies.remove(i--);
