@@ -5,10 +5,10 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class RocketBullet extends AbstractBullet {
 
-    private static final String BULLET_IMAGE_ID = "251";
+    private static final String BULLET_IMAGE_ID[] = {"303", "303", "303"};
 
-    public RocketBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
-        super(x, y, direction, damage, targetEnemy);
+    public RocketBullet(double x, double y, int direction, int damage, int level, BaseEnemy targetEnemy) {
+        super(x, y, direction, damage, level, targetEnemy);
         this.speed = Bullets.ROCKET_SPEED;
     }
 
@@ -19,6 +19,6 @@ public class RocketBullet extends AbstractBullet {
 
     @Override
     public String getBulletImageId() {
-        return BULLET_IMAGE_ID;
+        return BULLET_IMAGE_ID[level];
     }
 }

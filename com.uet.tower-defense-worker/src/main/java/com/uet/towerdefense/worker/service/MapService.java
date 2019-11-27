@@ -32,6 +32,10 @@ public class MapService {
     private List<BaseTower> towers = new ArrayList<>();
     private List<Coordinate> paths = new ArrayList<>();
 
+    public List<BaseTower> getTowers() {
+        return towers;
+    }
+
     public void init(int mapId) {
         this.mapId = mapId;
         ImageView imageView = new ImageView(AssetUtil.getMapImage(mapId));
@@ -105,9 +109,18 @@ public class MapService {
     }
 
     public void sellTower(BaseTower tower) {
-        menuService.addMoney(tower.getMoney());
+        menuService.addMoney(tower.getMoney() / 2);
+        for (BaseTower tempTower : towers)
+            if (tempTower == tower) {
+                towers.remove(tempTower);
+                break;
+            }
         nodeService.remove(tower.getImageViewStand());
         nodeService.remove(tower.getImageViewTower());
+    }
+
+    public void updateTower(BaseTower tower) {
+        tower.levelUp();
     }
 
     public void killEnemy(BaseEnemy enemy) {
@@ -133,7 +146,7 @@ public class MapService {
     public void update(long latestTimestamp) {
         // update
         for (BaseEnemy enemy : enemies) {
-            enemy.update(paths);
+            enemy.update(paths, mapId);
             nodeService.add(enemy.getImageView());
         }
         for (BaseTower tower : towers) {
@@ -142,7 +155,7 @@ public class MapService {
                 bullet.update();
                 nodeService.add(bullet.getImageView());
             }
-            tower.update(enemies, latestTimestamp);
+            tower.update(enemies, towers, latestTimestamp);
             nodeService.add(tower.getImageViewStand());
             nodeService.add(tower.getImageViewTower());
         }

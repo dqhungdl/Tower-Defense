@@ -43,5 +43,5 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void render();
 
-    void update(List<Coordinate> paths);
+    void update(List<Coordinate> paths, int mapId);
 }

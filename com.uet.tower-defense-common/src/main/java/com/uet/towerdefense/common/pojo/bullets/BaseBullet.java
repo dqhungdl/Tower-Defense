@@ -14,6 +14,10 @@ public interface BaseBullet<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setDamage(int damage);
 
+    int getLevel();
+
+    void setLevel(int level);
+
     int getDirection();
 
     void setDirection(int direction);
@@ -21,6 +25,8 @@ public interface BaseBullet<Tid extends Object> extends BaseDynamicEntity<Tid> {
     BaseEnemy getTargetEnemy();
 
     void setTargetEnemy(BaseEnemy enemy);
+
+    void levelUp();
 
     ImageView getImageView();
 

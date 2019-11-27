@@ -10,7 +10,7 @@ import java.util.List;
 public class RocketTower extends AbstractTower {
 
     private static final String STAND_IMAGE_ID = "181";
-    private static final String[] TOWER_IMAGE_ID = new String[]{"205", "204"};
+    private static final String[] TOWER_IMAGE_ID = new String[]{"304", "305", "306"};
 
     public RocketTower(double x, double y, List<Node> nodes) {
         super(x, y, nodes);
@@ -37,6 +37,6 @@ public class RocketTower extends AbstractTower {
 
     @Override
     public void addBullet(BaseEnemy targetEnemy) {
-        bullets.add(new RocketBullet(x, y, direction, damage, targetEnemy));
+        bullets.add(new RocketBullet(x, y, direction, damage, level, targetEnemy));
     }
 }

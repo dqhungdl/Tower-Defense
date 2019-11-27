@@ -5,6 +5,11 @@ import javafx.scene.image.Image;
 
 public class AssetUtil {
 
+    public static Image getImage(String imageId) {
+        String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/PNG/Retina/towerDefense_tile" + imageId + ".png").toString();
+        return new Image(fileName, GamePlays.SPRITE_SIZE, GamePlays.SPRITE_SIZE, false, false);
+    }
+
     public static Image getMapImage(int mapId) {
         String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/Maps/map" + mapId + ".png").toString();
         return new Image(fileName, GamePlays.WIDTH * GamePlays.SPRITE_SIZE, GamePlays.HEIGHT * GamePlays.SPRITE_SIZE, false, false);

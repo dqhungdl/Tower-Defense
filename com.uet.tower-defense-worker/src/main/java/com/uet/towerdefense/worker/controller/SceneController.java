@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class SceneController {
 
     @Autowired
-    private GamePlayScene gamePlayComponent;
+    private GamePlayScene gamePlayScene;
 
     private Stage stage;
 
@@ -24,7 +24,7 @@ public class SceneController {
     }
 
     public void toGamePlayScene() {
-        gamePlayComponent.init(1);
-        stage.setScene(gamePlayComponent.getScene());
+        gamePlayScene.init(1);
+        stage.setScene(gamePlayScene.getScene());
     }
 }

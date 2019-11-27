@@ -10,10 +10,10 @@ import java.util.List;
 public class MachineGunTower extends AbstractTower {
 
     private static final String STAND_IMAGE_ID = "182";
-    private static final String[] TOWER_IMAGE_ID = new String[]{"203", "203"};
+    private static final String[] TOWER_IMAGE_ID = new String[]{"226", "203", "204"};
 
     public MachineGunTower(double x, double y, List<Node> nodes) {
-        super(x,y,nodes);
+        super(x, y, nodes);
         speed = Towers.MACHINE_GUN_SPEED[level];
         range = Towers.MACHINE_GUN_RANGE[level];
         damage = Towers.MACHINE_GUN_DAMAGE[level];
@@ -37,6 +37,6 @@ public class MachineGunTower extends AbstractTower {
 
     @Override
     public void addBullet(BaseEnemy targetEnemy) {
-        bullets.add(new MachineGunBullet(x, y, direction, damage, targetEnemy));
+        bullets.add(new MachineGunBullet(x, y, direction, damage, level, targetEnemy));
     }
 }

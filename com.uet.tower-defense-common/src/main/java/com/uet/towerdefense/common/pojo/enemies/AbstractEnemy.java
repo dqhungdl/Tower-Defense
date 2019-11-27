@@ -2,8 +2,10 @@ package com.uet.towerdefense.common.pojo.enemies;
 
 import com.uet.towerdefense.common.data.Coordinate;
 import com.uet.towerdefense.common.data.Vector;
+import com.uet.towerdefense.common.enums.Enemies;
 import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
+import com.uet.towerdefense.common.enums.graphics.Maps;
 import com.uet.towerdefense.common.pojo.base.AbstractDynamicEntity;
 import com.uet.towerdefense.common.util.AssetUtil;
 import javafx.scene.image.ImageView;
@@ -112,7 +114,29 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
-    public void update(List<Coordinate> paths) {
+    public void update(List<Coordinate> paths, int mapId) {
+        if (getEnemyType().equals(Enemies.PLANE)) {
+            double targetX = Maps.MAP_TARGETS[mapId].getX() * GamePlays.SPRITE_SIZE;
+            double targetY = Maps.MAP_TARGETS[mapId].getY() * GamePlays.SPRITE_SIZE;
+            Vector v1 = new Vector(0, 1);
+            Vector v2 = new Vector(targetX - x, targetY - y);
+            double distance1 = Math.sqrt(Math.pow(v1.getDx(), 2) + Math.pow(v1.getDy(), 2));
+            double distance2 = Math.sqrt(Math.pow(v2.getDx(), 2) + Math.pow(v2.getDy(), 2));
+            double angle = Math.toDegrees(Math.acos((v1.getDx() * v2.getDy() + v1.getDy() * v2.getDx()) / (distance1 * distance2)));
+            if (v2.getDy() > 0)
+                angle = 360.0 - angle;
+            angle += 180.0;
+            direction = (int) angle;
+            double distance = Math.sqrt(Math.pow(targetX - x, 2) + Math.pow(targetY - y, 2));
+            if (distance <= speed) {
+                x = targetX;
+                y = targetY;
+            } else {
+                y += speed * Math.cos(Math.toRadians(Math.abs(direction - 90.0)));
+                x += speed * Math.sin(Math.toRadians(Math.abs(direction - 90.0)));
+            }
+            return;
+        }
         for (int i = paths.size() - 2; i >= 0; i--) {
             double startX = paths.get(i).getX() * GamePlays.SPRITE_SIZE;
             double startY = paths.get(i).getY() * GamePlays.SPRITE_SIZE;

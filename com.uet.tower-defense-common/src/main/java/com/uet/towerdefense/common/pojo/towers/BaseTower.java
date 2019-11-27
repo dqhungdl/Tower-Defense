@@ -64,11 +64,7 @@ public interface BaseTower<Tid extends Object> extends BaseStaticEntity<Tid> {
 
     void setImageViewTower(ImageView imageViewTower);
 
-    Circle getRangeCircle();
-
-    void setRangeCircle(Circle circle);
-
     void render();
 
-    void update(List<BaseEnemy> enemies, long currentTimestamp);
+    void update(List<BaseEnemy> enemies, List<BaseTower> towers, long currentTimestamp);
 }

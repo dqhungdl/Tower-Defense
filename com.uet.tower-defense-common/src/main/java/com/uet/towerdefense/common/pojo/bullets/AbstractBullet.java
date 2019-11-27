@@ -13,6 +13,8 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
 
     protected int damage;
 
+    protected int level;
+
     protected int direction;
 
     protected BaseEnemy targetEnemy;
@@ -39,6 +41,16 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
         this.damage = damage;
     }
 
+    @Override
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public int getDirection() {
         return direction;
     }
@@ -58,6 +70,14 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
     }
 
     @Override
+    public void levelUp() {
+        if (level == 2)
+            return;
+        level++;
+        imageView = new ImageView(AssetUtil.getBulletImage(getBulletImageId()));
+    }
+
+    @Override
     public ImageView getImageView() {
         return imageView;
     }
@@ -67,11 +87,12 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
         this.imageView = imageView;
     }
 
-    public AbstractBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
+    public AbstractBullet(double x, double y, int direction, int damage, int level, BaseEnemy targetEnemy) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.damage = damage;
+        this.level = level;
         this.targetEnemy = targetEnemy;
         imageView = new ImageView(AssetUtil.getBulletImage(getBulletImageId()));
         imageView.setId(RenderLevels.BULLET);
@@ -91,7 +112,7 @@ public abstract class AbstractBullet extends AbstractDynamicEntity<Long> impleme
         Vector v2 = new Vector(targetEnemy.getX() - x, targetEnemy.getY() - y);
         double distance1 = Math.sqrt(Math.pow(v1.getDx(), 2) + Math.pow(v1.getDy(), 2));
         double distance2 = Math.sqrt(Math.pow(v2.getDx(), 2) + Math.pow(v2.getDy(), 2));
-        double angle = Math.toDegrees(Math.acos((double) (v1.getDx() * v2.getDy() + v1.getDy() * v2.getDx()) / (distance1 * distance2)));
+        double angle = Math.toDegrees(Math.acos((v1.getDx() * v2.getDy() + v1.getDy() * v2.getDx()) / (distance1 * distance2)));
         if (v2.getDy() > 0)
             angle = 360.0 - angle;
         angle += 180.0;

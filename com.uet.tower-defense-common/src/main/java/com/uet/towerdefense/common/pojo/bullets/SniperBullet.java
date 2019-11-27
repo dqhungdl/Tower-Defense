@@ -7,10 +7,10 @@ import java.util.List;
 
 public class SniperBullet extends AbstractBullet {
 
-    private static final String BULLET_IMAGE_ID = "295";
+    private static final String[] BULLET_IMAGE_ID = {"295", "295", "296"};
 
-    public SniperBullet(double x, double y, int direction, int damage, BaseEnemy targetEnemy) {
-        super(x, y, direction, damage, targetEnemy);
+    public SniperBullet(double x, double y, int direction, int damage, int level, BaseEnemy targetEnemy) {
+        super(x, y, direction, damage, level, targetEnemy);
         this.speed = Bullets.SNIPER_SPEED;
     }
 
@@ -21,6 +21,6 @@ public class SniperBullet extends AbstractBullet {
 
     @Override
     public String getBulletImageId() {
-        return BULLET_IMAGE_ID;
+        return BULLET_IMAGE_ID[level];
     }
 }

@@ -40,8 +40,6 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     protected Circle rangeCircle;
 
-    protected Double opacity = Animations.NORMAL_OPACITY;
-
     @Override
     public double getSpeed() {
         return speed;
@@ -123,20 +121,13 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
     }
 
     @Override
-    public Circle getRangeCircle() {
-        return rangeCircle;
-    }
-
-    @Override
-    public void setRangeCircle(Circle rangeCircle) {
-        this.rangeCircle = rangeCircle;
-    }
-
-    @Override
     public void levelUp() {
-        if (level == 1)
+        if (level == 2)
             return;
         level++;
+        for (BaseBullet bullet : bullets)
+            bullet.setLevel(level);
+        imageViewTower.setImage(AssetUtil.getTowerImage(getTowerImageId()));
     }
 
     @Override
@@ -183,8 +174,10 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         this.x = x;
         this.y = y;
         this.direction = 0;
+        // Tower image
         imageViewStand = new ImageView(AssetUtil.getTowerImage(getStandImageId()));
         imageViewStand.setId(RenderLevels.TOWER_STAND);
+        // Range circle
         rangeCircle = new Circle();
         rangeCircle.setCenterX(y + GamePlays.TOWER_SIZE / 2);
         rangeCircle.setCenterY(x + GamePlays.TOWER_SIZE / 2);
@@ -192,21 +185,25 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         rangeCircle.setOpacity(Animations.LIGHT_OPACITY);
         rangeCircle.setId(RenderLevels.ANIMATION);
         imageViewStand.setOnMouseEntered(mouseEvent -> {
-            opacity = Animations.DARK_OPACITY;
+            imageViewStand.setOpacity(Animations.DARK_OPACITY);
+            imageViewTower.setOpacity(Animations.DARK_OPACITY);
             addRangeCircle(nodes);
         });
         imageViewStand.setOnMouseExited(mouseEvent -> {
-            opacity = Animations.NORMAL_OPACITY;
+            imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
+            imageViewTower.setOpacity(Animations.NORMAL_OPACITY);
             removeRangeCircle(nodes);
         });
         imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
         imageViewTower.setId(RenderLevels.TOWER);
         imageViewTower.setOnMouseEntered(mouseEvent -> {
-            opacity = Animations.DARK_OPACITY;
+            imageViewStand.setOpacity(Animations.DARK_OPACITY);
+            imageViewTower.setOpacity(Animations.DARK_OPACITY);
             addRangeCircle(nodes);
         });
         imageViewTower.setOnMouseExited(mouseEvent -> {
-            opacity = Animations.NORMAL_OPACITY;
+            imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
+            imageViewTower.setOpacity(Animations.NORMAL_OPACITY);
             removeRangeCircle(nodes);
         });
     }
@@ -216,20 +213,32 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         rangeCircle.setRadius(range);
         imageViewStand.setX(y);
         imageViewStand.setY(x);
-        imageViewStand.setOpacity(opacity);
         imageViewTower.setX(y);
         imageViewTower.setY(x);
-        imageViewTower.setOpacity(opacity);
         imageViewTower.setRotate(this.direction);
     }
 
+    private boolean isCoincideTargetEnemy(List<BaseTower> towers, BaseEnemy enemy) {
+        // Check coincide target enemy
+        for (BaseTower tower : towers)
+            if (tower != this) {
+                List<BaseBullet> bullets = tower.getBullets();
+                for (BaseBullet bullet : bullets)
+                    if (bullet.getTargetEnemy() == enemy && bullet.getDamage() >= enemy.getHp())
+                        return true;
+            }
+        return false;
+    }
+
     @Override
-    public void update(List<BaseEnemy> enemies, long currentTimestamp) {
+    public void update(List<BaseEnemy> enemies, List<BaseTower> towers, long currentTimestamp) {
         double towerX = x + GamePlays.TOWER_SIZE / 2;
         double towerY = y + GamePlays.TOWER_SIZE / 2;
         int minDistance = 1000000000;
         BaseEnemy targetEnemy = null;
         for (BaseEnemy enemy : enemies) {
+            if (isCoincideTargetEnemy(towers, enemy))
+                continue;
             int distance = (int) Math.sqrt(Math.pow(enemy.getX() + GamePlays.ENEMY_SIZE / 2 - towerX, 2) + Math.pow(enemy.getY() + GamePlays.ENEMY_SIZE / 2 - towerY, 2));
             if (minDistance > distance) {
                 minDistance = distance;
