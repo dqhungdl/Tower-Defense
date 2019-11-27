@@ -29,7 +29,7 @@ public class TowerDefenseApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         sceneController.setScene(primaryStage);
-        sceneController.toGamePlayScene();
+        sceneController.toMenuScene();
     }
 
     @Override
