@@ -5,7 +5,7 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class AirGunBullet extends AbstractBullet {
 
-    private static final String[] BULLET_IMAGE_ID = new String[]{"303", "304", "206"};
+    private static final String[] BULLET_IMAGE_ID = new String[]{"303", "304", "252"};
 
     public AirGunBullet(double x, double y, int direction, int damage, int level, BaseEnemy targetEnemy) {
         super(x, y, direction, damage, level, targetEnemy);
