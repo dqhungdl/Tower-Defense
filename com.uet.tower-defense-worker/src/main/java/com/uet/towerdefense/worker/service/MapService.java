@@ -111,6 +111,9 @@ public class MapService {
         for (BaseTower tempTower : towers)
             if (tempTower == tower) {
                 towers.remove(tempTower);
+                List<BaseBullet> bullets = tempTower.getBullets();
+                for (BaseBullet bullet : bullets)
+                    nodeService.remove(bullet.getImageView());
                 break;
             }
         nodeService.remove(tower.getImageViewStand());

@@ -5,7 +5,7 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 
 public class RocketBullet extends AbstractBullet {
 
-    private static final String BULLET_IMAGE_ID[] = {"303", "303", "303"};
+    private static final String BULLET_IMAGE_ID[] = {"305", "306", "251"};
 
     public RocketBullet(double x, double y, int direction, int damage, int level, BaseEnemy targetEnemy) {
         super(x, y, direction, damage, level, targetEnemy);

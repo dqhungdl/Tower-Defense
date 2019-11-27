@@ -10,7 +10,7 @@ import java.util.List;
 public class RocketTower extends AbstractTower {
 
     private static final String STAND_IMAGE_ID = "181";
-    private static final String[] TOWER_IMAGE_ID = new String[]{"304", "305", "306"};
+    private static final String[] TOWER_IMAGE_ID = new String[]{"309", "310", "205"};
 
     public RocketTower(double x, double y, List<Node> nodes) {
         super(x, y, nodes);

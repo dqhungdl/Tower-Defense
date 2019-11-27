@@ -11,5 +11,5 @@ public class Bullets {
     public static final double ROCKET_SPEED = 2.0;
     public static final double AIR_GUN_SPEED = 4.0;
 
-    public static final double ROCKET_EXPLOSION_RANGE = 300;
+    public static final double ROCKET_EXPLOSION_RANGE = 100;
 }
