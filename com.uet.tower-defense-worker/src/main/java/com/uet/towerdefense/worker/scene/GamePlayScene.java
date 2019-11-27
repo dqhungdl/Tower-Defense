@@ -1,6 +1,7 @@
 package com.uet.towerdefense.worker.scene;
 
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
 import com.uet.towerdefense.common.pojo.GameStage;
@@ -8,6 +9,7 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.PlaneEnemy;
 import com.uet.towerdefense.common.pojo.enemies.SmallEnemy;
 import com.uet.towerdefense.common.pojo.enemies.TankEnemy;
+import com.uet.towerdefense.worker.controller.SceneController;
 import com.uet.towerdefense.worker.service.MapService;
 import com.uet.towerdefense.worker.service.MenuService;
 import com.uet.towerdefense.worker.service.NodeService;
@@ -17,6 +19,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,12 @@ public class GamePlayScene {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private SceneController sceneController;
+
+    @Autowired
+    private GamePlayScene gamePlayScene;
 
     private Scene scene;
     private Group group;
@@ -100,6 +109,19 @@ public class GamePlayScene {
             if (!isExistedEnemy && enemies.size() == 0) {
                 enemiesGeneration(gameStage.getStage());
                 gameStage.setStage(gameStage.getStage() + 1);
+                if (gameStage.getStage() > GamePlays.BASE_STAGE) {
+                    Rectangle rectangle = new Rectangle();
+                    rectangle.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
+                    rectangle.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
+                    rectangle.setOpacity(Animations.LIGHT_OPACITY);
+                    rectangle.setId(RenderLevels.COVER);
+                    rectangle.setOnMouseClicked(mouseEvent -> {
+                        sceneController.toMenuScene();
+                    });
+                    nodeService.add(rectangle);
+                    notificationService.setNotification("\n   Victory\nGo to Menu ...");
+                    gamePlayScene.getTimeline().stop();
+                }
                 if (isStart)
                     nextTimestamp = new Date().getTime() + GamePlays.SECOND_START_GAME;
                 else
@@ -119,25 +141,21 @@ public class GamePlayScene {
 
     public void enemiesGeneration(int stage) {
         int maxLevelSmallEnemy;
-        int maxLevelTankEnemy ;
+        int maxLevelTankEnemy;
         int maxLevelPlaneEnemy;
-        if (stage==1)
-        {
+        if (stage == 1) {
             maxLevelSmallEnemy = 2;
             maxLevelTankEnemy = 1;
             maxLevelPlaneEnemy = 1;
 
-        }
-        else {
+        } else {
             maxLevelSmallEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 4), 3);
             maxLevelTankEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 1);
             maxLevelPlaneEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 1);
         }
 
         int smallEnemies = 10 + stage * 2, tankEnemies = 5 + stage, planeEnemies = 3 + stage;
-
         Random random = new Random();
-
         while (smallEnemies > 0) {
             smallEnemies--;
             enemies.add(new SmallEnemy(Math.abs(random.nextInt()) % (maxLevelSmallEnemy + 1)));

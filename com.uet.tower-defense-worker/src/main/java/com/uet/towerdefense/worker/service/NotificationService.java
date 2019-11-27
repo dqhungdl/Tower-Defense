@@ -35,7 +35,7 @@ public class NotificationService {
         nodeService.add(imageView);
         notification = new Text();
         notification.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 15);
-        notification.setY(380);
+        notification.setY(370);
         notification.setFill(Color.BLACK);
         notification.setId(RenderLevels.TEXT);
         notification.setFont(Font.font(GamePlays.FONT, FontWeight.BOLD, 20));

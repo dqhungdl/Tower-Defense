@@ -125,8 +125,6 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
 
     @Override
     public void levelUp() {
-        if (level == 2)
-            return;
         level++;
         for (BaseBullet bullet : bullets)
             bullet.setLevel(level);
@@ -183,9 +181,23 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             content += "Rocket\n";
         if (getTowerType().equals(Towers.AIR_GUN))
             content += "Air Gun";
-        content += "Speed : " + speed + "\n";
-        content += "Range : " + range + "\n";
-        content += "Damage: " + damage + "\n";
+        content += "Speed   : " + speed + "\n";
+        content += "Range   : " + range + "\n";
+        content += "Damage  : " + damage + "\n";
+        if (level == 2)
+            content += "Max level";
+        else {
+            int money = 0;
+            if (getTowerType().equals(Towers.SNIPER))
+                money = Towers.SNIPER_MONEY[level + 1];
+            if (getTowerType().equals(Towers.MACHINE_GUN))
+                money = Towers.MACHINE_GUN_MONEY[level + 1];
+            if (getTowerType().equals(Towers.ROCKET))
+                money = Towers.ROCKET_MONEY[level + 1];
+            if (getTowerType().equals(Towers.AIR_GUN))
+                money = Towers.AIR_GUN_MONEY[level + 1];
+            content += "Level up: " + money;
+        }
         return content;
     }
 

@@ -2,6 +2,7 @@ package com.uet.towerdefense.worker.service;
 
 import com.uet.towerdefense.common.data.Coordinate;
 import com.uet.towerdefense.common.enums.*;
+import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.Directions;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.enums.graphics.Maps;
@@ -9,7 +10,12 @@ import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.towers.BaseTower;
 import com.uet.towerdefense.common.util.AssetUtil;
+import com.uet.towerdefense.worker.controller.SceneController;
+import com.uet.towerdefense.worker.scene.GamePlayScene;
+import com.uet.towerdefense.worker.scene.MenuScene;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +34,15 @@ public class MapService {
 
     @Autowired
     private SoundService soundService;
+
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private SceneController sceneController;
+
+    @Autowired
+    private GamePlayScene gamePlayScene;
 
     private int mapId;
     private List<BaseEnemy> enemies = new ArrayList<>();
@@ -96,8 +111,10 @@ public class MapService {
     }
 
     public void buyTower(BaseTower tower) {
-        if (!menuService.addMoney(-tower.getMoney()))
+        if (!menuService.addMoney(-tower.getMoney())) {
+            notificationService.setNotification("\n  Not enough \n    money");
             return;
+        }
         double x = tower.getX(), y = tower.getY();
         for (int distance = 0; distance <= Towers.ACCEPTABLE_PLACED_RANGE; distance++) {
             for (int i = (int) x - distance; i <= x + distance; i++) {
@@ -115,7 +132,20 @@ public class MapService {
     }
 
     public void sellTower(BaseTower tower) {
-        menuService.addMoney(tower.getMoney() / 2);
+        int money = 0;
+        if (tower.getTowerType().equals(Towers.SNIPER))
+            for (int i = 0; i <= tower.getLevel(); i++)
+                money += Towers.SNIPER_MONEY[i];
+        if (tower.getTowerType().equals(Towers.MACHINE_GUN))
+            for (int i = 0; i <= tower.getLevel(); i++)
+                money += Towers.MACHINE_GUN_MONEY[i];
+        if (tower.getTowerType().equals(Towers.ROCKET))
+            for (int i = 0; i <= tower.getLevel(); i++)
+                money += Towers.ROCKET_MONEY[i];
+        if (tower.getTowerType().equals(Towers.AIR_GUN))
+            for (int i = 0; i <= tower.getLevel(); i++)
+                money += Towers.AIR_GUN_MONEY[i];
+        menuService.addMoney(money / 2);
         for (BaseTower tempTower : towers)
             if (tempTower == tower) {
                 towers.remove(tempTower);
@@ -129,6 +159,21 @@ public class MapService {
     }
 
     public void updateTower(BaseTower tower) {
+        if (tower.getLevel() == 2)
+            return;
+        int money = 0;
+        if (tower.getTowerType().equals(Towers.SNIPER))
+            money = Towers.SNIPER_MONEY[tower.getLevel() + 1];
+        if (tower.getTowerType().equals(Towers.MACHINE_GUN))
+            money = Towers.MACHINE_GUN_MONEY[tower.getLevel() + 1];
+        if (tower.getTowerType().equals(Towers.ROCKET))
+            money = Towers.ROCKET_MONEY[tower.getLevel() + 1];
+        if (tower.getTowerType().equals(Towers.AIR_GUN))
+            money = Towers.AIR_GUN_MONEY[tower.getLevel() + 1];
+        if (!menuService.addMoney(-money)) {
+            notificationService.setNotification("\n  Not enough \n    money");
+            return;
+        }
         tower.levelUp();
     }
 
@@ -137,8 +182,19 @@ public class MapService {
     }
 
     public void attackBase(BaseEnemy enemy) {
-        if (!menuService.subHp(enemy.getHp()))
-            System.exit(0);
+        Rectangle rectangle = new Rectangle();
+        rectangle.setWidth(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH);
+        rectangle.setHeight(GamePlays.HEIGHT * GamePlays.SPRITE_SIZE);
+        rectangle.setOpacity(Animations.LIGHT_OPACITY);
+        rectangle.setId(RenderLevels.COVER);
+        rectangle.setOnMouseClicked(mouseEvent -> {
+            sceneController.toMenuScene();
+        });
+        nodeService.add(rectangle);
+        if (!menuService.subHp(enemy.getHp())) {
+            notificationService.setNotification("\n  Defeat\nGo to Menu ...");
+            gamePlayScene.getTimeline().stop();
+        }
     }
 
     public void render() {
@@ -193,10 +249,9 @@ public class MapService {
             if ((enemies.get(i).getX() == paths.get(paths.size() - 1).getX() * GamePlays.SPRITE_SIZE
                     && enemies.get(i).getY() == paths.get(paths.size() - 1).getY() * GamePlays.SPRITE_SIZE)
                     || enemies.get(i).getHp() <= 0) {
-                if (enemies.get(i).getHp() <= 0) {
+                if (enemies.get(i).getHp() <= 0)
                     killEnemy(enemies.get(i));
-                    soundService.soundProduce("kill");
-                } else
+                else
                     attackBase(enemies.get(i));
                 nodeService.remove(enemies.get(i).getImageView());
                 enemies.remove(i--);

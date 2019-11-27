@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.EventHandler;
 import java.util.List;
 
 @Service
@@ -40,6 +41,9 @@ public class MenuService {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private SoundService soundService;
 
     private GameStage gameStage;
 
@@ -114,7 +118,7 @@ public class MenuService {
         // Create save button
         ImageView saveButton = new ImageView(AssetUtil.getButtonImage("1", GamePlays.ADDED_WIDTH, 100));
         saveButton.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
-        saveButton.setY(650);
+        saveButton.setY(630);
         saveButton.setId(RenderLevels.BUTTON);
         saveButton.setOnMouseEntered(mouseEvent -> {
             saveButton.setOpacity(Animations.DARK_OPACITY);
@@ -132,6 +136,66 @@ public class MenuService {
             sceneController.toMenuScene();
         });
         nodeService.add(saveButton);
+        // Create sound button
+        ImageView backgroundSoundButton = new ImageView(AssetUtil.getButtonImage("11", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+        backgroundSoundButton.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 30);
+        backgroundSoundButton.setY(740);
+        backgroundSoundButton.setId(RenderLevels.BUTTON);
+        backgroundSoundButton.setOnMouseEntered(mouseEnter -> {
+            backgroundSoundButton.setOpacity(Animations.DARK_OPACITY);
+        });
+        backgroundSoundButton.setOnMouseExited(mouseEnter -> {
+            backgroundSoundButton.setOpacity(Animations.NORMAL_OPACITY);
+        });
+        backgroundSoundButton.setOnMouseClicked(mouseEnter -> {
+            if (soundService.getBackgroundSound().isMute()) {
+                backgroundSoundButton.setImage(AssetUtil.getButtonImage("11", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+                soundService.getBackgroundSound().setMute(false);
+            } else {
+                backgroundSoundButton.setImage(AssetUtil.getButtonImage("12", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+                soundService.getBackgroundSound().setMute(true);
+            }
+        });
+        nodeService.add(backgroundSoundButton);
+        // Create sound button
+        ImageView gameSoundButton = new ImageView(AssetUtil.getButtonImage("13", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+        gameSoundButton.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.SPRITE_SIZE + 55);
+        gameSoundButton.setY(740);
+        gameSoundButton.setId(RenderLevels.BUTTON);
+        gameSoundButton.setOnMouseEntered(mouseEnter -> {
+            gameSoundButton.setOpacity(Animations.DARK_OPACITY);
+        });
+        gameSoundButton.setOnMouseExited(mouseEnter -> {
+            gameSoundButton.setOpacity(Animations.NORMAL_OPACITY);
+        });
+        gameSoundButton.setOnMouseClicked(mouseEnter -> {
+            if (soundService.isMuteGameSound()) {
+                gameSoundButton.setImage(AssetUtil.getButtonImage("13", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+                soundService.setMuteGameSound(false);
+            } else {
+                gameSoundButton.setImage(AssetUtil.getButtonImage("14", GamePlays.SPRITE_SIZE - 30, GamePlays.SPRITE_SIZE - 30));
+                soundService.setMuteGameSound(true);
+            }
+
+        });
+        nodeService.add(gameSoundButton);
+    }
+
+    public String getContent(BaseTower tower) {
+        String content = "";
+        if (tower.getTowerType().equals(Towers.SNIPER))
+            content += "Sniper\n";
+        if (tower.getTowerType().equals(Towers.MACHINE_GUN))
+            content += "Machine Gun\n";
+        if (tower.getTowerType().equals(Towers.ROCKET))
+            content += "Rocket\n";
+        if (tower.getTowerType().equals(Towers.AIR_GUN))
+            content += "Air Gun\n";
+        content += "Speed   : " + tower.getSpeed() + "\n";
+        content += "Range   : " + tower.getRange() + "\n";
+        content += "Damage  : " + tower.getDamage() + "\n";
+        content += "Cost    : " + tower.getMoney();
+        return content;
     }
 
     private void createTowerImage(BaseTower tower) {
@@ -153,10 +217,12 @@ public class MenuService {
         imageViewTower.setOnMouseEntered(mouseEvent -> {
             imageViewStand.setOpacity(Animations.DARK_OPACITY);
             imageViewTower.setOpacity(Animations.DARK_OPACITY);
+            notificationService.setNotification(getContent(tower));
         });
         imageViewTower.setOnMouseExited(mouseEvent -> {
             imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
-            imageViewTower.setOpacity(Animations.DARK_OPACITY);
+            imageViewTower.setOpacity(Animations.NORMAL_OPACITY);
+            notificationService.setNotification("");
         });
         imageViewTower.setOnMouseDragged(mouseEvent -> {
             tempImageViewStand.setX(mouseEvent.getX() - GamePlays.TOWER_SIZE / 2);
