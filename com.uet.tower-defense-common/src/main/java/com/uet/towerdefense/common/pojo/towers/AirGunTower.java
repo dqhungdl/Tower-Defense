@@ -4,6 +4,7 @@ import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.pojo.bullets.AirGunBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import javafx.scene.Node;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class AirGunTower extends AbstractTower {
     private static final String STAND_IMAGE_ID = "182";
     private static final String[] TOWER_IMAGE_ID = new String[]{"307", "308", "206"};
 
-    public AirGunTower(double x, double y, List<Node> nodes) {
-        super(x, y, nodes);
+    public AirGunTower(double x, double y, List<Node> nodes, Text notification) {
+        super(x, y, nodes, notification);
         speed = Towers.AIR_GUN_SPEED[level];
         range = Towers.AIR_GUN_RANGE[level];
         damage = Towers.AIR_GUN_DAMAGE[level];

@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +173,23 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             }
     }
 
-    public AbstractTower(double x, double y, List<Node> nodes) {
+    private String getContent() {
+        String content = "";
+        if (getTowerType().equals(Towers.SNIPER))
+            content += "Sniper\n";
+        if (getTowerType().equals(Towers.MACHINE_GUN))
+            content += "Machine Gun\n";
+        if (getTowerType().equals(Towers.ROCKET))
+            content += "Rocket\n";
+        if (getTowerType().equals(Towers.AIR_GUN))
+            content += "Air Gun\n";
+        content += "Speed: " + speed + "\n";
+        content += "Range: " + range + "\n";
+        content += "Damage: " + damage + "\n";
+        return content;
+    }
+
+    public AbstractTower(double x, double y, List<Node> nodes, Text notification) {
         this.x = x;
         this.y = y;
         this.direction = 0;
@@ -190,11 +207,13 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             imageViewStand.setOpacity(Animations.DARK_OPACITY);
             imageViewTower.setOpacity(Animations.DARK_OPACITY);
             addRangeCircle(nodes);
+            notification.setText(getContent());
         });
         imageViewStand.setOnMouseExited(mouseEvent -> {
             imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
             imageViewTower.setOpacity(Animations.NORMAL_OPACITY);
             removeRangeCircle(nodes);
+            notification.setText("");
         });
         imageViewTower = new ImageView(AssetUtil.getTowerImage(getTowerImageId()));
         imageViewTower.setId(RenderLevels.TOWER);
@@ -202,11 +221,13 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
             imageViewStand.setOpacity(Animations.DARK_OPACITY);
             imageViewTower.setOpacity(Animations.DARK_OPACITY);
             addRangeCircle(nodes);
+            notification.setText(getContent());
         });
         imageViewTower.setOnMouseExited(mouseEvent -> {
             imageViewStand.setOpacity(Animations.NORMAL_OPACITY);
             imageViewTower.setOpacity(Animations.NORMAL_OPACITY);
             removeRangeCircle(nodes);
+            notification.setText("");
         });
     }
 

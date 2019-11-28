@@ -31,6 +31,9 @@ public class ResumeService {
     @Autowired
     private GamePlayScene gamePlayScene;
 
+    @Autowired
+    private NotificationService notificationService;
+
     private PrintWriter getPrintWriter(String fileName) throws IOException {
         File file = new File(fileName);
         if (!file.exists()) {
@@ -92,13 +95,13 @@ public class ResumeService {
                 String towerType = str[4];
                 BaseTower tower = null;
                 if (towerType.equals(Towers.SNIPER))
-                    tower = new SniperTower(x, y, nodeService.getNodes());
+                    tower = new SniperTower(x, y, nodeService.getNodes(), notificationService.getNotification());
                 if (towerType.equals(Towers.MACHINE_GUN))
-                    tower = new MachineGunTower(x, y, nodeService.getNodes());
+                    tower = new MachineGunTower(x, y, nodeService.getNodes(), notificationService.getNotification());
                 if (towerType.equals(Towers.ROCKET))
-                    tower = new RocketTower(x, y, nodeService.getNodes());
+                    tower = new RocketTower(x, y, nodeService.getNodes(), notificationService.getNotification());
                 if (towerType.equals(Towers.AIR_GUN))
-                    tower = new AirGunTower(x, y, nodeService.getNodes());
+                    tower = new AirGunTower(x, y, nodeService.getNodes(), notificationService.getNotification());
                 tower.setDirection(direction);
                 tower.setLevel(level);
                 mapService.getTowers().add(tower);

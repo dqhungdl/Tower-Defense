@@ -118,11 +118,26 @@ public class GamePlayScene {
     }
 
     public void enemiesGeneration(int stage) {
-        int maxLevelSmallEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 4), 3);
-        int maxLevelTankEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 2);
-        int maxLevelPlaneEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 2);
+        int maxLevelSmallEnemy;
+        int maxLevelTankEnemy ;
+        int maxLevelPlaneEnemy;
+        if (stage==1)
+        {
+            maxLevelSmallEnemy = 2;
+            maxLevelTankEnemy = 1;
+            maxLevelPlaneEnemy = 1;
+
+        }
+        else {
+            maxLevelSmallEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 4), 3);
+            maxLevelTankEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 1);
+            maxLevelPlaneEnemy = Math.min(stage / (GamePlays.BASE_STAGE / 2), 1);
+        }
+
         int smallEnemies = 10 + stage * 2, tankEnemies = 5 + stage, planeEnemies = 3 + stage;
+
         Random random = new Random();
+
         while (smallEnemies > 0) {
             smallEnemies--;
             enemies.add(new SmallEnemy(Math.abs(random.nextInt()) % (maxLevelSmallEnemy + 1)));

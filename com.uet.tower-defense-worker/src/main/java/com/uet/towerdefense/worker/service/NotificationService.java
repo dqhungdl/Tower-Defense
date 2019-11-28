@@ -19,6 +19,14 @@ public class NotificationService {
 
     private Text notification;
 
+    public Text getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Text notification) {
+        this.notification = notification;
+    }
+
     public void init() {
         ImageView imageView = new ImageView(AssetUtil.getButtonImage("6", GamePlays.ADDED_WIDTH, 170));
         imageView.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
@@ -26,20 +34,16 @@ public class NotificationService {
         imageView.setId(RenderLevels.MENU);
         nodeService.add(imageView);
         notification = new Text();
-        notification.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
+        notification.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE+15);
         notification.setY(380);
-        notification.setFill(Color.GREEN);
+        notification.setFill(Color.BLACK);
         notification.setId(RenderLevels.TEXT);
-        notification.setFont(Font.font(GamePlays.FONT, FontWeight.BOLD, 30));
+        notification.setFont(Font.font(GamePlays.FONT, FontWeight.BOLD, 25));
         notification.setLineSpacing(GamePlays.ADDED_WIDTH);
-//        nodeService.add(notification);
+        nodeService.add(notification);
     }
 
     public void setNotification(String str) {
         notification.setText(str);
-    }
-
-    public void render() {
-
     }
 }

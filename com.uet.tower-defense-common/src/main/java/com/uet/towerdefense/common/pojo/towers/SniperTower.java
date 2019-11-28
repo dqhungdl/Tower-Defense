@@ -4,6 +4,7 @@ import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.pojo.bullets.SniperBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import javafx.scene.Node;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class SniperTower extends AbstractTower {
     private static final String STAND_IMAGE_ID = "180";
     private static final String[] TOWER_IMAGE_ID = new String[]{"249", "302", "250"};
 
-    public SniperTower(double x, double y, List<Node> nodes) {
-        super(x, y, nodes);
+    public SniperTower(double x, double y, List<Node> nodes, Text notification) {
+        super(x, y, nodes, notification);
         speed = Towers.SNIPER_SPEED[level];
         range = Towers.SNIPER_RANGE[level];
         damage = Towers.SNIPER_DAMAGE[level];

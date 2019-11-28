@@ -38,6 +38,9 @@ public class MenuService {
     @Autowired
     private ResumeService resumeService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     private GameStage gameStage;
 
     private Text textMoney;
@@ -97,13 +100,13 @@ public class MenuService {
         nodeService.add(textTimer);
         // Item's frame and tower's drag-drop
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110);
-        createTowerImage(new SniperTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113, nodeService.getNodes()));
+        createTowerImage(new SniperTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113, nodeService.getNodes(), notificationService.getNotification()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110);
-        createTowerImage(new MachineGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113, nodeService.getNodes()));
+        createTowerImage(new MachineGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113, nodeService.getNodes(), notificationService.getNotification()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 110 + GamePlays.SPRITE_SIZE + 20);
-        createTowerImage(new RocketTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+        createTowerImage(new RocketTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 14, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes(), notificationService.getNotification()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 110 + GamePlays.SPRITE_SIZE + 20);
-        createTowerImage(new AirGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes()));
+        createTowerImage(new AirGunTower(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 10, 113 + GamePlays.SPRITE_SIZE + 20, nodeService.getNodes(), notificationService.getNotification()));
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 525);
         createUpdateButtonImage(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + 12, 525);
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 525);
@@ -163,13 +166,13 @@ public class MenuService {
             int y = (int) mouseEvent.getX() - GamePlays.TOWER_SIZE / 2;
             BaseTower addedTower = null;
             if (tower.getTowerType().equals(Towers.SNIPER))
-                addedTower = new SniperTower(x, y, nodeService.getNodes());
+                addedTower = new SniperTower(x, y, nodeService.getNodes(), notificationService.getNotification());
             if (tower.getTowerType().equals(Towers.MACHINE_GUN))
-                addedTower = new MachineGunTower(x, y, nodeService.getNodes());
+                addedTower = new MachineGunTower(x, y, nodeService.getNodes(), notificationService.getNotification());
             if (tower.getTowerType().equals(Towers.ROCKET))
-                addedTower = new RocketTower(x, y, nodeService.getNodes());
+                addedTower = new RocketTower(x, y, nodeService.getNodes(), notificationService.getNotification());
             if (tower.getTowerType().equals(Towers.AIR_GUN))
-                addedTower = new AirGunTower(x, y, nodeService.getNodes());
+                addedTower = new AirGunTower(x, y, nodeService.getNodes(), notificationService.getNotification());
             mapService.buyTower(addedTower);
             nodeService.remove(tempImageViewStand);
             nodeService.remove(tempImageViewTower);
