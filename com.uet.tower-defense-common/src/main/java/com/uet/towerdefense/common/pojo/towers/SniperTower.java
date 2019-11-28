@@ -21,6 +21,15 @@ public class SniperTower extends AbstractTower {
     }
 
     @Override
+    public void levelUp() {
+        super.levelUp();
+        speed = Towers.SNIPER_SPEED[level];
+        range = Towers.SNIPER_RANGE[level];
+        damage = Towers.SNIPER_DAMAGE[level];
+        money = Towers.SNIPER_MONEY[level];
+    }
+
+    @Override
     public String getTowerType() {
         return Towers.SNIPER;
     }

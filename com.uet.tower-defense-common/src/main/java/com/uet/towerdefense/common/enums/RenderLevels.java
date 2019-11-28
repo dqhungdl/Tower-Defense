@@ -11,5 +11,4 @@ public class RenderLevels {
     public static final String BUTTON = "8";
     public static final String TEXT = "9";
     public static final String DRAG_DROP = "10";
-    public static final String MENU_SCENE = "11";
 }

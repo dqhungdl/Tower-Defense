@@ -30,6 +30,10 @@ public class MapService {
     private List<BaseTower> towers = new ArrayList<>();
     private List<Coordinate> paths = new ArrayList<>();
 
+    public List<BaseEnemy> getEnemies() {
+        return enemies;
+    }
+
     public List<BaseTower> getTowers() {
         return towers;
     }
@@ -169,7 +173,7 @@ public class MapService {
                     if (bullets.get(i).getBulletType().equals(Bullets.ROCKET))
                         for (BaseEnemy enemy : enemies) {
                             double distance = Math.sqrt(Math.pow(enemy.getX() - bullets.get(i).getX(), 2) + Math.pow(enemy.getY() - bullets.get(i).getY(), 2));
-                            if (!enemy.getEnemyType().equals(Enemies.PLANE) && distance <= Bullets.ROCKET_EXPLOSION_RANGE)
+                            if (!enemy.getEnemyType().equals(Enemies.PLANE) && distance <= Bullets.ROCKET_EXPLOSION_RANGE[tower.getLevel()])
                                 enemy.setHp(enemy.getHp() - bullets.get(i).getDamage());
                         }
                     else

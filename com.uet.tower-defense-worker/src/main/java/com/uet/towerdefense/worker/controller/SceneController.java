@@ -1,8 +1,8 @@
 package com.uet.towerdefense.worker.controller;
 
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
-import com.uet.towerdefense.worker.service.GamePlayScene;
-import com.uet.towerdefense.worker.service.MenuScene;
+import com.uet.towerdefense.worker.scene.GamePlayScene;
+import com.uet.towerdefense.worker.scene.MenuScene;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class SceneController {
 
     public void toMenuScene()
     {
-        menuScene.menuInit();
+        menuScene.init();
         stage.setScene(menuScene.getScene());
     }
 }

@@ -3,9 +3,7 @@ package com.uet.towerdefense.common.pojo.towers;
 import com.uet.towerdefense.common.pojo.base.BaseStaticEntity;
 import com.uet.towerdefense.common.pojo.bullets.BaseBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;

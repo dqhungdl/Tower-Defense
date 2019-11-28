@@ -2,9 +2,7 @@ package com.uet.towerdefense.common.pojo.towers;
 
 import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.pojo.bullets.AirGunBullet;
-import com.uet.towerdefense.common.pojo.bullets.MachineGunBullet;
 import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
-import com.uet.towerdefense.common.pojo.enemies.SmallEnemy;
 import javafx.scene.Node;
 
 import java.util.List;
@@ -16,6 +14,15 @@ public class AirGunTower extends AbstractTower {
 
     public AirGunTower(double x, double y, List<Node> nodes) {
         super(x, y, nodes);
+        speed = Towers.AIR_GUN_SPEED[level];
+        range = Towers.AIR_GUN_RANGE[level];
+        damage = Towers.AIR_GUN_DAMAGE[level];
+        money = Towers.AIR_GUN_MONEY[level];
+    }
+
+    @Override
+    public void levelUp() {
+        super.levelUp();
         speed = Towers.AIR_GUN_SPEED[level];
         range = Towers.AIR_GUN_RANGE[level];
         damage = Towers.AIR_GUN_DAMAGE[level];

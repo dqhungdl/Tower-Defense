@@ -21,6 +21,15 @@ public class RocketTower extends AbstractTower {
     }
 
     @Override
+    public void levelUp() {
+        super.levelUp();
+        speed = Towers.ROCKET_SPEED[level];
+        range = Towers.ROCKET_RANGE[level];
+        damage = Towers.ROCKET_DAMAGE[level];
+        money = Towers.ROCKET_MONEY[level];
+    }
+
+    @Override
     public String getTowerType() {
         return Towers.ROCKET;
     }

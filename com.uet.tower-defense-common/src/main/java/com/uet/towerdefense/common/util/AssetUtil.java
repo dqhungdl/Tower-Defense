@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 
 public class AssetUtil {
-    public static Image getMenuSence(){
+    public static Image getMenuImage() {
         String fileName = AssetUtil.class.getClassLoader().getResource("AssetsKit_2/Menu/menu.png").toString();
         return new Image(fileName, GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH, GamePlays.HEIGHT * GamePlays.SPRITE_SIZE + GamePlays.ADDED_HEIGHT, false, false);
     }

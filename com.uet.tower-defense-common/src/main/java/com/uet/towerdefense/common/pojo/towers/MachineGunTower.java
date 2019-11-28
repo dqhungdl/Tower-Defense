@@ -21,6 +21,15 @@ public class MachineGunTower extends AbstractTower {
     }
 
     @Override
+    public void levelUp() {
+        super.levelUp();
+        speed = Towers.MACHINE_GUN_SPEED[level];
+        range = Towers.MACHINE_GUN_RANGE[level];
+        damage = Towers.MACHINE_GUN_DAMAGE[level];
+        money = Towers.MACHINE_GUN_MONEY[level];
+    }
+
+    @Override
     public String getTowerType() {
         return Towers.MACHINE_GUN;
     }

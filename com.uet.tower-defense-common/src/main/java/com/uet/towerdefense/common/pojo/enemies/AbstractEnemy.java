@@ -81,6 +81,16 @@ public abstract class AbstractEnemy extends AbstractDynamicEntity<Long> implemen
     }
 
     @Override
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    @Override
     public Vector getVector() {
         return vector;
     }

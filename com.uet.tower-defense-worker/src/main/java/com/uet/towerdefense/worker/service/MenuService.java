@@ -1,11 +1,14 @@
 package com.uet.towerdefense.worker.service;
 
 import com.uet.towerdefense.common.enums.RenderLevels;
+import com.uet.towerdefense.common.enums.Towers;
 import com.uet.towerdefense.common.enums.graphics.Animations;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
 import com.uet.towerdefense.common.pojo.GameStage;
 import com.uet.towerdefense.common.pojo.towers.*;
 import com.uet.towerdefense.common.util.AssetUtil;
+import com.uet.towerdefense.worker.controller.SceneController;
+import com.uet.towerdefense.worker.scene.GamePlayScene;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +24,9 @@ import java.util.List;
 public class MenuService {
 
     @Autowired
+    private SceneController sceneController;
+
+    @Autowired
     private NodeService nodeService;
 
     @Autowired
@@ -29,12 +35,23 @@ public class MenuService {
     @Autowired
     private GamePlayScene gamePlayScene;
 
+    @Autowired
+    private ResumeService resumeService;
+
     private GameStage gameStage;
 
     private Text textMoney;
     private Text textHp;
     private Text textStage;
     private Text textTimer;
+
+    public GameStage getGameStage() {
+        return gameStage;
+    }
+
+    public void setGameStage(GameStage gameStage) {
+        this.gameStage = gameStage;
+    }
 
     public void init(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -92,6 +109,26 @@ public class MenuService {
         createFrame(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 525);
         createSellButtonImage(GamePlays.WIDTH * GamePlays.SPRITE_SIZE + GamePlays.ADDED_WIDTH - GamePlays.SPRITE_SIZE - 12, 525);
         // Create save button
+        ImageView saveButton = new ImageView(AssetUtil.getButtonImage("1", GamePlays.ADDED_WIDTH, 100));
+        saveButton.setX(GamePlays.WIDTH * GamePlays.SPRITE_SIZE);
+        saveButton.setY(650);
+        saveButton.setId(RenderLevels.BUTTON);
+        saveButton.setOnMouseEntered(mouseEvent -> {
+            saveButton.setOpacity(Animations.DARK_OPACITY);
+        });
+        saveButton.setOnMouseExited(mouseEvent -> {
+            saveButton.setOpacity(Animations.NORMAL_OPACITY);
+        });
+        saveButton.setOnMouseClicked(mouseEvent -> {
+            resumeService.store();
+            gamePlayScene.getTimeline().stop();
+            gamePlayScene.enemiesClear();
+            mapService.getTowers().clear();
+            mapService.getEnemies().clear();
+            nodeService.getNodes().clear();
+            sceneController.toMenuScene();
+        });
+        nodeService.add(saveButton);
     }
 
     private void createTowerImage(BaseTower tower) {
@@ -125,13 +162,13 @@ public class MenuService {
             int x = (int) mouseEvent.getY() - GamePlays.TOWER_SIZE / 2;
             int y = (int) mouseEvent.getX() - GamePlays.TOWER_SIZE / 2;
             BaseTower addedTower = null;
-            if (tower instanceof SniperTower)
+            if (tower.getTowerType().equals(Towers.SNIPER))
                 addedTower = new SniperTower(x, y, nodeService.getNodes());
-            if (tower instanceof MachineGunTower)
+            if (tower.getTowerType().equals(Towers.MACHINE_GUN))
                 addedTower = new MachineGunTower(x, y, nodeService.getNodes());
-            if (tower instanceof RocketTower)
+            if (tower.getTowerType().equals(Towers.ROCKET))
                 addedTower = new RocketTower(x, y, nodeService.getNodes());
-            if (tower instanceof AirGunTower)
+            if (tower.getTowerType().equals(Towers.AIR_GUN))
                 addedTower = new AirGunTower(x, y, nodeService.getNodes());
             mapService.buyTower(addedTower);
             nodeService.remove(tempImageViewStand);

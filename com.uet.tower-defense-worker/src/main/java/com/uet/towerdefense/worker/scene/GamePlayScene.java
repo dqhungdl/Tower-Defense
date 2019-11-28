@@ -1,4 +1,4 @@
-package com.uet.towerdefense.worker.service;
+package com.uet.towerdefense.worker.scene;
 
 import com.uet.towerdefense.common.enums.RenderLevels;
 import com.uet.towerdefense.common.enums.graphics.GamePlays;
@@ -8,10 +8,12 @@ import com.uet.towerdefense.common.pojo.enemies.BaseEnemy;
 import com.uet.towerdefense.common.pojo.enemies.PlaneEnemy;
 import com.uet.towerdefense.common.pojo.enemies.SmallEnemy;
 import com.uet.towerdefense.common.pojo.enemies.TankEnemy;
+import com.uet.towerdefense.worker.service.MapService;
+import com.uet.towerdefense.worker.service.MenuService;
+import com.uet.towerdefense.worker.service.NodeService;
+import com.uet.towerdefense.worker.service.NotificationService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -38,15 +40,37 @@ public class GamePlayScene {
 
     private Scene scene;
     private Group group;
+    private Timeline timeline;
     private GameStage gameStage;
     private int mapId;
     private long timeElapse;
     private long timestamp;
-    private long nextTimestamp = new Date().getTime() + GamePlays.SECOND_START_GAME;
+    private long nextTimestamp;
+    private boolean isStart;
     private LinkedList<BaseEnemy> enemies = new LinkedList<>();
+
+    public long getNextTimestamp() {
+        return nextTimestamp;
+    }
+
+    public void setNextTimestamp(long nextTimestamp) {
+        this.nextTimestamp = nextTimestamp;
+    }
+
+    public LinkedList<BaseEnemy> getEnemies() {
+        return enemies;
+    }
+
+    public void addEnemy(BaseEnemy enemy) {
+        enemies.add(enemy);
+    }
 
     public Scene getScene() {
         return scene;
+    }
+
+    public Timeline getTimeline() {
+        return timeline;
     }
 
     public long getTimeElapse() {
@@ -64,30 +88,31 @@ public class GamePlayScene {
         mapService.init(mapId);
         menuService.init(gameStage);
         notificationService.init();
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(4), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                timestamp = new Date().getTime();
-                boolean isExistedEnemy = false;
-                for (Node node : group.getChildren())
-                    if (node.getId().equals(RenderLevels.ENEMY)) {
-                        isExistedEnemy = true;
-                        break;
-                    }
-                if (!isExistedEnemy && enemies.size() == 0) {
-                    enemiesGeneration(gameStage.getStage());
-                    gameStage.setStage(gameStage.getStage() + 1);
+        isStart = true;
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(4), actionEvent -> {
+            timestamp = new Date().getTime();
+            boolean isExistedEnemy = false;
+            for (Node node : group.getChildren())
+                if (node.getId().equals(RenderLevels.ENEMY)) {
+                    isExistedEnemy = true;
+                    break;
+                }
+            if (!isExistedEnemy && enemies.size() == 0) {
+                enemiesGeneration(gameStage.getStage());
+                gameStage.setStage(gameStage.getStage() + 1);
+                if (isStart)
+                    nextTimestamp = new Date().getTime() + GamePlays.SECOND_START_GAME;
+                else
                     nextTimestamp = timestamp + GamePlays.SECOND_BETWEEN_STAGES;
-                }
-                update();
-                if (enemies.size() > 0 && timestamp >= nextTimestamp) {
-                    nextTimestamp = timestamp + GamePlays.SECOND_TO_MILLI / 2;
-                    mapService.addEnemy(enemies.pollFirst());
-                }
+            }
+            isStart = false;
+            update();
+            if (enemies.size() > 0 && timestamp >= nextTimestamp) {
+                nextTimestamp = timestamp + GamePlays.SECOND_TO_MILLI / 2;
+                mapService.addEnemy(enemies.pollFirst());
             }
         });
-        Timeline timeline = new Timeline(keyFrame);
+        timeline = new Timeline(keyFrame);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -110,6 +135,10 @@ public class GamePlayScene {
             planeEnemies--;
             enemies.add(new PlaneEnemy(Math.abs(random.nextInt()) % (maxLevelPlaneEnemy + 1)));
         }
+    }
+
+    public void enemiesClear() {
+        enemies.clear();
     }
 
     private void update() {

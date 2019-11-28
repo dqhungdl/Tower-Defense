@@ -29,6 +29,10 @@ public interface BaseEnemy<Tid extends Object> extends BaseDynamicEntity<Tid> {
 
     void setDirection(int direction);
 
+    int getLevel();
+
+    void setLevel(int level);
+
     Vector getVector();
 
     void setVector(Vector vector);
