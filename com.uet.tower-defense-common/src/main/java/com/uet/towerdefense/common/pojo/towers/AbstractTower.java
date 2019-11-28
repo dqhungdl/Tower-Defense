@@ -182,8 +182,8 @@ public abstract class AbstractTower extends AbstractStaticEntity<Long> implement
         if (getTowerType().equals(Towers.ROCKET))
             content += "Rocket\n";
         if (getTowerType().equals(Towers.AIR_GUN))
-            content += "Air Gun\n";
-        content += "Speed: " + speed + "\n";
+            content += "Air Gun";
+        content += "Speed: " + speed + "";
         content += "Range: " + range + "\n";
         content += "Damage: " + damage + "\n";
         return content;
